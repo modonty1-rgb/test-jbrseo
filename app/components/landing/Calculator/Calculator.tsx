@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import type { MoneyPair } from "./calculatorTypes";
 import {
   CALCULATOR_BAD_EXTRA_ITEM,
@@ -15,7 +16,11 @@ import IntroBlock from "./IntroBlock";
 import SavingsCard from "./SavingsCard";
 import WithPlanCard from "./WithPlanCard";
 import WithoutPlanCard from "./WithoutPlanCard";
+
 import { Icon } from "@/app/components/Icon";
+import { Badge } from "@/app/components/ui/badge";
+import { Card } from "@/app/components/ui/card";
+import { Input } from "@/app/components/ui/input";
 
 const SUB_M = 1299;
 const SUB_Y = SUB_M * 12;
@@ -63,7 +68,7 @@ function SliderRow({
         </span>
       </div>
 
-      <input
+      <Input
         type="range"
         min={min}
         max={max}
@@ -120,7 +125,7 @@ export default function Calculator({
     <section
       id="why-now"
       dir="rtl"
-      className="relative overflow-hidden border-t border-border bg-muted/40 px-5 pb-16 pt-20 sm:px-8 lg:px-10 lg:pb-20 lg:pt-24"
+      className="relative overflow-hidden border-t border-border bg-background px-5 pb-16 pt-20 sm:px-8 lg:px-10 lg:pb-20 lg:pt-24"
     >
       <div
         aria-hidden
@@ -134,7 +139,7 @@ export default function Calculator({
       <div className="relative mx-auto max-w-[900px]">
         <IntroBlock pct={pct} />
 
-        <div className="mb-5 rounded-3xl border border-border bg-card p-8 shadow-sm">
+        <Card className="mb-5 rounded-3xl border border-border bg-card p-8 shadow-sm">
           <p className="mb-6 text-[11px] font-extrabold uppercase tracking-widest text-muted-foreground/60">
             {CALCULATOR_SET_TEAM_TEXT}
           </p>
@@ -216,7 +221,7 @@ export default function Calculator({
               formatMoney={fmt}
             />
           </div>
-        </div>
+        </Card>
 
         <SavingsCard
           totalM={totalM}
@@ -234,12 +239,13 @@ export default function Calculator({
 
         <div className="flex flex-wrap justify-center gap-2">
           {CALCULATOR_FOOTER_BADGES.map((p) => (
-            <span
+            <Badge
               key={p}
-              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-bold text-muted-foreground"
+              variant="outline"
+              className="rounded-full border-border bg-card px-3.5 py-1.5 text-xs font-bold text-muted-foreground"
             >
               {p}
-            </span>
+            </Badge>
           ))}
         </div>
       </div>

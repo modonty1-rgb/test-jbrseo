@@ -1,4 +1,5 @@
 import { Icon } from "@/app/components/Icon";
+import { Card } from "@/app/components/ui/card";
 
 type Step = { num: string; icon: string; title: string; line: string; tag: string };
 
@@ -8,7 +9,7 @@ export function HowItWorksStepCard({ step, index }: Props) {
   const isHighlight = index === 1;
 
   return (
-    <div
+    <Card
       id={`hiw-card-${index}`}
       className="
         group relative flex flex-col overflow-hidden
@@ -77,6 +78,6 @@ export function HowItWorksStepCard({ step, index }: Props) {
       >
         {step.tag}
       </span>
-    </div>
+    </Card>
   );
 }

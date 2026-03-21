@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { getCountryFromHeaders } from "@/lib/getCountryFromHeaders";
 import { getStaticLandingWithOverrides } from "@/app/content/landing/get-static-landing";
 import { StaffAvatar } from "@/app/components/StaffAvatar";
+import { Card } from "@/app/components/ui/card";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://jbrseo.com";
 const teamTitle = "فريق JBRSEO | الأشخاص وراء المنصة";
@@ -39,9 +40,9 @@ export default async function TeamPage() {
       <section className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-3">
           {coreTeam.map((member, i) => (
-            <div
+            <Card
               key={`core-${i}-${member.name}`}
-              className="flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card/40 text-sm"
+              className="flex flex-col overflow-hidden rounded-2xl border-border/60 bg-card/40 p-0 text-sm shadow-sm"
             >
               <div className="aspect-square w-full max-w-[14rem] shrink-0 sm:max-w-[16rem]">
                 <StaffAvatar
@@ -58,7 +59,7 @@ export default async function TeamPage() {
                   {member.bio}
                 </p>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </section>
@@ -66,9 +67,9 @@ export default async function TeamPage() {
       <section className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-3">
           {executionTeam.map((member, i) => (
-            <div
+            <Card
               key={`exec-${i}-${member.name}`}
-              className="flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card/40 text-sm"
+              className="flex flex-col overflow-hidden rounded-2xl border-border/60 bg-card/40 p-0 text-sm shadow-sm"
             >
               <div className="aspect-square w-full max-w-[14rem] shrink-0 sm:max-w-[16rem]">
                 <StaffAvatar
@@ -85,7 +86,7 @@ export default async function TeamPage() {
                   {member.bio}
                 </p>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </section>

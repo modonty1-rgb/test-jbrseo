@@ -56,16 +56,20 @@ export function LandingHeader({
   const { header } = staticLanding;
   const navLinks = navLinksProp ?? getNavLinks(country, basePath);
   const ctaLabel = content.siteSettings.ctaLabel || DEFAULT_CTA;
+  const primaryCtaLabel =
+    pricingHref.includes("#pricing") || pricingHref.endsWith("/pricing")
+      ? "شوف الأسعار"
+      : ctaLabel;
   type HeaderWithBookCta = StaticLanding["header"] & { bookCta?: string };
-  const bookCta = (header as HeaderWithBookCta).bookCta || ctaLabel;
+  const bookCta = (header as HeaderWithBookCta).bookCta || primaryCtaLabel;
   const headerBannerText = (header.bannerText ?? "").trim();
   const showBanner = headerBannerText.length > 0;
   const logoHref = basePath ? `${basePath}#hero` : "/#hero";
 
   return (
     <header
-      className="sticky top-0 z-50 w-full border-b border-white/10 backdrop-blur-xl max-md:backdrop-blur-sm"
-      style={{ background: "oklch(0.12 0.14 275)" }}
+      className="sticky top-0 z-50 w-full"
+      style={{ background: "oklch(0.09 0.11 275)" }}
     >
       {showBanner && (
         <div
@@ -75,14 +79,14 @@ export function LandingHeader({
             sm:px-4 sm:py-2.5 sm:text-[11.5px]
           "
           style={{
-            background: "linear-gradient(to right, oklch(0.28 0.18 275), oklch(0.22 0.16 275))",
-            color:        "#fff",
+            background: "var(--accent)",
+            color: "#fff",
             letterSpacing: ".01em",
           }}
         >
           <span
-            className="inline-block h-1.5 w-1.5 rounded-full"
-            style={{ background: "oklch(0.65 0.18 142)", animation: "pulse-hdr 1.8s ease infinite" }}
+            className="inline-block h-1.5 w-1.5 rounded-full bg-white/60"
+            style={{ animation: "pulse-hdr 1.8s ease infinite" }}
             aria-hidden
           />
           <span>{headerBannerText}</span>
@@ -91,10 +95,9 @@ export function LandingHeader({
             href={pricingHref}
             className="
               inline-flex items-center gap-1 rounded-full
-              border border-white/30 bg-white/10
+              border border-white/40 bg-white/15
               px-2.5 py-0.5 text-[10.5px] font-black
-              shadow-sm transition-colors
-              hover:bg-white/20
+              transition-colors hover:bg-white/25
             "
           >
             <span>{bookCta}</span>
@@ -102,21 +105,21 @@ export function LandingHeader({
         </div>
       )}
 
-      <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-between px-5 py-3 sm:px-8 lg:px-10">
+      <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-between border-b border-white/8 px-5 py-3 sm:px-8 lg:px-10">
         <HeaderLogo logoHref={logoHref} />
         <DesktopNav navLinks={navLinks} />
         <div className="flex items-center gap-2.5">
           <ThemeToggle />
           <Link
             href={pricingHref}
-            className="max-lg:hidden inline-flex items-center justify-center rounded-full px-5 py-2 font-black shadow-[0_4px_16px_oklch(0.14_0.13_275/20%)] transition-all duration-200 hover:scale-[1.03] hover:shadow-[0_6px_24px_oklch(0.14_0.13_275/30%)]"
+            className="hidden sm:inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-[12.5px] font-black text-white shadow-[0_4px_16px_color-mix(in_oklch,var(--accent)_40%,transparent)] transition-all duration-200 hover:bg-accent/90 hover:scale-[1.03] sm:px-5 sm:text-[13.5px]"
           >
-            {ctaLabel}
+            {primaryCtaLabel}
           </Link>
           <div className="lg:hidden">
             <HeaderMobileMenuLazy
               navLinks={navLinks}
-              ctaLabel={ctaLabel}
+              ctaLabel={primaryCtaLabel}
               pricingHref={pricingHref}
               bannerText={header.bannerText ?? ""}
             />

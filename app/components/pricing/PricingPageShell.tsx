@@ -4,6 +4,7 @@ import type { SupportedCountry } from "@/lib/landing-content.types";
 import { getWhatsAppLink } from "@/lib/site-links";
 import { PricingBillingSection } from "@/app/components/pricing/PricingBillingSection";
 import { PricingFaqExcerpt } from "@/app/components/pricing/PricingFaqExcerpt";
+import { Card } from "@/app/components/ui/card";
 
 type Props = {
   pricing: PricingContent;
@@ -104,7 +105,7 @@ export function PricingPageShell({
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-border bg-card/80 px-4 py-4 text-center">
+        <Card className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-border bg-card/80 px-4 py-4 text-center shadow-sm">
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
             {UI.trustTitle}
           </p>
@@ -123,7 +124,7 @@ export function PricingPageShell({
             <p className="font-semibold">{BOTTOM_CTA.headline}</p>
             <p className="mt-1 whitespace-pre-line">{BOTTOM_CTA.subheadline}</p>
           </div>
-        </div>
+        </Card>
 
         <PricingFaqExcerpt faq={faq} />
       </section>

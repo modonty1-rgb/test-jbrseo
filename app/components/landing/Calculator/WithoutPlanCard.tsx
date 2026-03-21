@@ -1,5 +1,6 @@
 "use client";
 
+import { Card } from "@/app/components/ui/card";
 import { CALCULATOR_WITHOUT_CARD } from "./calculatorCopy";
 import type { MoneyPair } from "./calculatorTypes";
 
@@ -15,7 +16,7 @@ export default function WithoutPlanCard({
   formatMoney: (n: number) => string;
 }) {
   return (
-    <div className="rounded-2xl border border-destructive/20 bg-destructive/5 p-4">
+    <Card className="rounded-2xl border-destructive/20 bg-destructive/5 p-4 shadow-sm">
       <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[.08em] text-destructive">
         {CALCULATOR_WITHOUT_CARD.title}
       </p>
@@ -52,7 +53,7 @@ export default function WithoutPlanCard({
           </p>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
 

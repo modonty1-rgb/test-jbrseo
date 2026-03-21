@@ -358,6 +358,17 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 104px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+[id] {
+  scroll-margin-top: 104px;
 }
 
 ::-webkit-scrollbar       { width: 10px; }

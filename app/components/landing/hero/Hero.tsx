@@ -13,15 +13,17 @@ export default function Hero({
   content,
   staticLanding,
   country,
+  ctaLabel,
   ctaLink = "/signup",
 }: {
   content: LandingContent;
   staticLanding: StaticLanding;
   country?: SupportedCountry;
+  ctaLabel?: string;
   ctaLink?: string;
 }) {
   const h = staticLanding.hero;
-  const ctaLabel = content.siteSettings?.ctaLabel || "ابدأ مجاناً — بدون بطاقة";
+  const resolvedCtaLabel = ctaLabel || content.siteSettings?.ctaLabel || "ابدأ مجاناً — بدون بطاقة";
   const waLink = country ? getWhatsAppLink(country, content.siteSettings?.whatsappNumber) : "";
   const secondaryCta =
     waLink && staticLanding.finalCta?.wa
@@ -34,9 +36,9 @@ export default function Hero({
       aria-labelledby="hero-title"
       className="
         landing-grain relative overflow-hidden bg-background
-        px-5 pt-16 pb-24
-        sm:px-8 sm:pt-20 sm:pb-32
-        lg:px-12 lg:pt-[92px] lg:pb-[160px]
+        px-5 pt-10 pb-16
+        sm:px-8 sm:pt-14 sm:pb-20
+        lg:px-12 lg:pt-[64px] lg:pb-[100px]
       "
     >
       <HeroBackground />
@@ -53,9 +55,8 @@ export default function Hero({
           </p>
           <HeroBenefits benefits={h.benefits} />
           <HeroCTASection
-            cta={ctaLabel}
+            cta={resolvedCtaLabel}
             ctaLink={ctaLink}
-            trust={h.trust}
             secondaryCta={secondaryCta}
           />
         </div>

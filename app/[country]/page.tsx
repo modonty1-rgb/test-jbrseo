@@ -12,6 +12,7 @@ import {
   getCountryCodeFromSlug,
   isSupportedCountrySlug,
 } from "@/lib/country-config";
+import { isAnnualFromBillingParam } from "@/lib/billing-search-param";
 import { getLandingContent } from "@/lib/getLandingContent";
 import { getWhatsAppLink } from "@/lib/site-links";
 
@@ -95,7 +96,7 @@ export default async function CountryHome({
 }) {
   const { country: raw } = await params;
   const sp = await searchParams;
-  const annual = sp?.billing === "annual";
+  const annual = isAnnualFromBillingParam(sp?.billing);
   const slug = raw?.toLowerCase();
   if (!isSupportedCountrySlug(slug)) {
     return null;
@@ -104,9 +105,11 @@ export default async function CountryHome({
   const countryCode = getCountryCodeFromSlug(countrySlug);
   const basePath = `/${countrySlug}`;
   const ctaLink = `${basePath}/signup`;
+  const pricingCtaLink = `${basePath}#pricing`;
+  const pricingCtaLabel = "شوف الأسعار والخطة المناسبة";
   const pricingHrefBase = `${basePath}/pricing`;
   const signupHrefBase = ctaLink;
-  const outcomesCtaLink = `${basePath}#pricing`;
+  const outcomesCtaLink = pricingCtaLink;
 
   const [content, pricingSALanding, pricingEGLanding] = await Promise.all([
     getLandingContent(countryCode),
@@ -137,20 +140,20 @@ export default async function CountryHome({
     <>
       <LandingJsonLd content={content} />
       <section className="relative">
-        <Hero content={content} staticLanding={mergedStaticLanding} country={countryCode} ctaLink={ctaLink} />
+        <Hero content={content} staticLanding={mergedStaticLanding} country={countryCode} ctaLink={pricingCtaLink} ctaLabel={pricingCtaLabel} />
         <HeroTrustBar />
       </section>
       <section className="relative">
-        <HowItWorks staticLanding={mergedStaticLanding} ctaLabel={ctaLabel} ctaLink={ctaLink} />
+        <HowItWorks staticLanding={mergedStaticLanding} ctaLabel={pricingCtaLabel} ctaLink={pricingCtaLink} />
       </section>
       <section className="relative">
-        <Outcomes staticLanding={mergedStaticLanding} ctaLabel={ctaLabel} ctaLink={outcomesCtaLink} />
+        <WhyNowCalculator ctaLabel={pricingCtaLabel} ctaLink={pricingCtaLink} />
+      </section>
+      <section className="relative">
+        <Outcomes staticLanding={mergedStaticLanding} ctaLabel={pricingCtaLabel} ctaLink={outcomesCtaLink} />
       </section>
       <section className="relative">
         <SocialProof staticLanding={mergedStaticLanding} />
-      </section>
-      <section className="relative">
-        <WhyNowCalculator ctaLabel={ctaLabel} ctaLink={ctaLink} />
       </section>
       <section className="relative">
         <div id="pricing">

@@ -32,9 +32,11 @@ export function HeaderMobileMenu({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <button
+        <Button
           type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border/60 bg-card/60 text-foreground transition-colors hover:bg-muted"
+          variant="outline"
+          size="icon"
+          className="h-9 w-9 rounded-lg border-border/60 bg-card/60"
           aria-label={open ? "إغلاق القائمة" : "فتح القائمة"}
           aria-expanded={open}
         >
@@ -52,7 +54,7 @@ export function HeaderMobileMenu({
             <line x1="4" y1="8" x2="20" y2="8" />
             <line x1="4" y1="16" x2="20" y2="16" />
           </svg>
-        </button>
+        </Button>
       </SheetTrigger>
       <SheetContent
         side="left"

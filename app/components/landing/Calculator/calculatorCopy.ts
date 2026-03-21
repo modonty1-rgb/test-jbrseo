@@ -1,12 +1,12 @@
 export const CALCULATOR_DEFAULT_CTA_LABEL = "وفّر هذا الرقم ابتداءً من اليوم ←";
 
 export const CALCULATOR_INTRO = {
-  pillText: "احسب توفيرك الحقيقي",
-  titlePrefix: "٦ موظفين أو ",
-  titleEmphasis: "مدونتي؟",
+  pillText: "قبل السعر: احسب تكلفة البديل",
+  titlePrefix: "قبل ما تقارن الأسعار: ",
+  titleEmphasis: "كم يكلّفك البديل فعلاً؟",
   description:
-    "حرّك الأرقام حسب سوقك، سواء كنت في السعودية أو مصر أو أي سوق عربي — وشوف التوفير الحقيقي خلال سنة كاملة.",
-  savingsPercentPrefix: "نسبة التوفير (مقارنةً بـ بدون مدونتي): ",
+    "حرّك الأرقام حسب سوقك، وشوف بنفسك كم قد تدفع لفريق محتوى كامل خلال سنة، ثم قارن ذلك باشتراك مدونتي.",
+  savingsPercentPrefix: "نسبة التوفير المحتملة: ",
 };
 
 export const CALCULATOR_WITHOUT_CARD = {

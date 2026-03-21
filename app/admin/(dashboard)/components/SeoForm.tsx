@@ -3,7 +3,9 @@
 import { updateSeoFormData } from "@/app/actions/landing";
 import type { SupportedCountry } from "@/lib/landing-content.types";
 import type { SiteSettingsJson } from "@/lib/site-settings.types";
-import { inputBase, labelClass } from "./AdminFormShared";
+import { Label } from "@/app/components/ui/label";
+import { Input } from "@/app/components/ui/input";
+import { Textarea } from "@/app/components/ui/textarea";
 import { ConfirmSaveDialog } from "./ConfirmSaveDialog";
 
 const SEO_FIELDS: {
@@ -55,30 +57,28 @@ export function SeoForm({
             }
           >
             <div className="flex flex-row items-center justify-between gap-2">
-              <label className={labelClass} htmlFor={`seo-${key}`}>
+              <Label htmlFor={`seo-${key}`} className="text-xs font-medium text-muted-foreground">
                 {label}
-              </label>
+              </Label>
               <span className="text-xs text-muted-foreground" role="note">
                 {hint}
               </span>
             </div>
             {key === "description" || key === "ogDescription" || key === "twitterDescription" ? (
-              <textarea
+              <Textarea
                 id={`seo-${key}`}
                 name={key}
                 defaultValue={get(key)}
                 rows={2}
-                className={inputBase}
                 placeholder={placeholder}
                 dir="ltr"
               />
             ) : (
-              <input
+              <Input
                 id={`seo-${key}`}
                 type={type}
                 name={key}
                 defaultValue={get(key)}
-                className={inputBase}
                 placeholder={placeholder}
                 dir="ltr"
               />

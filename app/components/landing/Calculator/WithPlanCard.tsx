@@ -1,5 +1,6 @@
 "use client";
 
+import { Card } from "@/app/components/ui/card";
 import { CALCULATOR_WITH_CARD } from "./calculatorCopy";
 
 export default function WithPlanCard({
@@ -14,7 +15,7 @@ export default function WithPlanCard({
   formatMoney: (n: number) => string;
 }) {
   return (
-    <div className="rounded-2xl border border-success/20 bg-success/5 p-4">
+    <Card className="rounded-2xl border-success/20 bg-success/5 p-4 shadow-sm">
       <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[.08em] text-success">
         {CALCULATOR_WITH_CARD.title}
       </p>
@@ -51,7 +52,7 @@ export default function WithPlanCard({
           </p>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
 

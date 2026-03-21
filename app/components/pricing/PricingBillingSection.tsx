@@ -13,7 +13,7 @@ type Props = {
 };
 
 export function PricingBillingSection({ plans, ui, currency, signupHrefBase = "/signup" }: Props) {
-  const [annual, setAnnual] = useState(false);
+  const [annual, setAnnual] = useState(true);
 
   return (
     <div className="space-y-6">

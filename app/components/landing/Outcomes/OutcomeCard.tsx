@@ -1,5 +1,6 @@
 import type { OutcomeItem } from "@/app/content/landing/types";
 import { Icon } from "@/app/components/Icon";
+import { Card } from "@/app/components/ui/card";
 
 type OutcomeCardProps = {
   item: OutcomeItem;
@@ -8,7 +9,7 @@ type OutcomeCardProps = {
 
 export function OutcomeCard({ item, index }: OutcomeCardProps) {
   return (
-    <div
+    <Card
       className="
         outcomes-card group relative flex flex-col overflow-hidden
         rounded-[22px] border border-border bg-background
@@ -48,6 +49,6 @@ export function OutcomeCard({ item, index }: OutcomeCardProps) {
       <p className="flex-1 text-[13px] leading-[1.75] text-muted-foreground">
         {item.line}
       </p>
-    </div>
+    </Card>
   );
 }

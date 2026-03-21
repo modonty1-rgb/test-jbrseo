@@ -3,6 +3,7 @@ import { cache } from "react";
 import { unstable_cache } from "next/cache";
 import { getStaticLandingWithOverrides } from "@/app/content/landing/get-static-landing";
 import { cl } from "@/helpers/cloudinary";
+import { applyIndustryOverrides } from "@/app/content/landing/industries";
 import type { LandingContent, SupportedCountry } from "./landing-content.types";
 import { prisma } from "./prisma";
 import { staticPlansToPricingPlans } from "./static-plans-to-content";
@@ -74,7 +75,7 @@ async function getStaticFallback(): Promise<LandingContent> {
   } as unknown as LandingContent;
 }
 
-async function fetchLandingContent(country: SupportedCountry): Promise<LandingContent> {
+async function fetchLandingContent(country: SupportedCountry, industry?: string): Promise<LandingContent> {
   const base = await getStaticFallback();
   const [staticLandingRaw, settingsRow, seoOverride, ctaLabelOverride, pricingTeaserOverride] = await Promise.all([
     getStaticLandingWithOverrides(country),
@@ -161,9 +162,11 @@ async function fetchLandingContent(country: SupportedCountry): Promise<LandingCo
     logoLight: cl(base.landingImages.logoLight),
   };
 
+  const finalStaticLanding = applyIndustryOverrides(staticLanding, industry);
+
   return {
     ...base,
-    staticLanding,
+    staticLanding: finalStaticLanding,
     seo: seo as LandingContent["seo"],
     tracking,
     siteSettings: { ctaLabel, whatsappNumber },
@@ -177,17 +180,17 @@ async function fetchLandingContent(country: SupportedCountry): Promise<LandingCo
   };
 }
 
-async function getLandingContentImpl(country: SupportedCountry): Promise<LandingContent> {
+async function getLandingContentImpl(country: SupportedCountry, industry?: string): Promise<LandingContent> {
   const cached = unstable_cache(
     async () => {
       try {
-        return await fetchLandingContent(country);
+        return await fetchLandingContent(country, industry);
       } catch {
         return await getStaticFallback();
       }
     },
-    ["landing-content", country],
-    { revalidate: 60, tags: [`landing-${country}`] }
+    ["landing-content", country, industry ?? "default"],
+    { revalidate: 60, tags: [`landing-${country}`, industry ? `industry-${industry}` : ""] }
   );
   return cached();
 }

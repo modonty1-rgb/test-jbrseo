@@ -3,13 +3,16 @@
 import { useMemo, useState, useEffect, FormEvent } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/app/components/ui/button";
+import { Card } from "@/app/components/ui/card";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
+import { Textarea } from "@/app/components/ui/textarea";
+import { cn } from "@/lib/utils";
 import { Icon } from "@/app/components/Icon";
 import type { PricingPlan, SupportedCountry } from "@/lib/landing-content.types";
 import { CurrencyIcon } from "@/app/components/shared/PricingBillingToggle";
 import { createSubscriber } from "@/app/actions/subscribers";
-
-const INPUT_CLS =
-  "w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent";
+import { isAnnualFromBillingParam } from "@/lib/billing-search-param";
 
 const ARABIC_NUMERALS = "٠١٢٣٤٥٦٧٨٩";
 function parsePriceString(value: string): number | null {
@@ -38,7 +41,9 @@ export function SignupForm({ serverPlans, country, countrySlug }: SignupFormProp
   const [planIndex, setPlanIndex] = useState(() =>
     planIndexFromParam(searchParams.get("plan"), maxPlanIndex)
   );
-  const [isAnnual, setIsAnnual] = useState(false);
+  const [isAnnual, setIsAnnual] = useState(() =>
+    isAnnualFromBillingParam(searchParams.get("billing"))
+  );
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -54,6 +59,11 @@ export function SignupForm({ serverPlans, country, countrySlug }: SignupFormProp
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    setPlanIndex(planIndexFromParam(searchParams.get("plan"), maxPlanIndex));
+    setIsAnnual(isAnnualFromBillingParam(searchParams.get("billing")));
+  }, [searchParams, maxPlanIndex]);
   const countryCode = country === "SA" ? "+966" : "+20";
 
   const serverPlan = useMemo(
@@ -130,8 +140,11 @@ export function SignupForm({ serverPlans, country, countrySlug }: SignupFormProp
         <div className="absolute bottom-20 end-1/4 h-64 w-64 rounded-full bg-accent/12 blur-3xl" />
       </div>
 
-      <div
-        className={`relative z-10 w-full max-w-md lg:max-w-4xl rounded-2xl border border-border/60 bg-card/80 backdrop-blur-sm shadow-2xl shadow-primary/8 p-6 lg:p-8 flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_1fr] lg:gap-8 bg-linear-to-br from-primary/3 via-transparent to-accent/3 transition-all duration-700 ease-out ${reveal}`}
+      <Card
+        className={cn(
+          "relative z-10 w-full max-w-md lg:max-w-4xl rounded-2xl border-border/60 bg-card/80 backdrop-blur-sm shadow-2xl shadow-primary/8 p-6 lg:p-8 flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_1fr] lg:gap-8 bg-linear-to-br from-primary/3 via-transparent to-accent/3 transition-all duration-700 ease-out border",
+          reveal
+        )}
       >
         <div className="flex flex-col gap-5 min-w-0">
           <header className="space-y-3">
@@ -143,19 +156,21 @@ export function SignupForm({ serverPlans, country, countrySlug }: SignupFormProp
                 const p = serverPlans[idx];
                 const isActive = idx === planIndex;
                 return (
-                  <button
+                  <Button
                     key={idx}
                     type="button"
+                    variant={isActive ? "default" : "ghost"}
+                    size="sm"
                     onClick={() => setPlanIndex(idx)}
                     className={
-                      "px-3.5 py-1.5 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card " +
+                      "h-auto rounded-full px-3.5 py-1.5 text-xs shadow-none transition-all duration-200 " +
                       (isActive
-                        ? "bg-primary text-primary-foreground shadow-md"
-                        : "text-muted-foreground hover:text-foreground hover:scale-105 hover:bg-muted/80")
+                        ? "shadow-md"
+                        : "text-muted-foreground hover:scale-105 hover:bg-muted/80 hover:text-foreground")
                     }
                   >
                     {p?.name ?? `الخطة ${idx + 1}`}
-                  </button>
+                  </Button>
                 );
               })}
             </div>
@@ -164,29 +179,33 @@ export function SignupForm({ serverPlans, country, countrySlug }: SignupFormProp
               {hasAnnual && (
                 <div role="group" aria-label="دورة الفوترة">
                   <div className="flex rounded-full border border-border bg-muted/60 p-1">
-                    <button
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setIsAnnual(false)}
                       aria-pressed={!isAnnual}
-                      className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
+                      className={`h-auto rounded-full px-4 py-1.5 text-xs font-medium shadow-none transition-all duration-200 ${
                         !isAnnual ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       شهري
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setIsAnnual(true)}
                       aria-pressed={isAnnual}
-                      className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
+                      className={`h-auto rounded-full px-4 py-1.5 text-xs font-medium shadow-none transition-all duration-200 ${
                         isAnnual ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       سنوي
-                    <span className="rounded-full bg-accent/15 px-1.5 py-0.5 text-[10px] font-bold text-accent">
-                      الأوفر <Icon emoji="✦" />
-                    </span>
-                    </button>
+                      <span className="rounded-full bg-accent/15 px-1.5 py-0.5 text-[10px] font-bold text-accent">
+                        الأوفر <Icon emoji="✦" />
+                      </span>
+                    </Button>
                   </div>
                 </div>
               )}
@@ -233,30 +252,30 @@ export function SignupForm({ serverPlans, country, countrySlug }: SignupFormProp
             <input type="hidden" name="country" value={country} />
             <input type="hidden" name="isAnnual" value={isAnnual ? "true" : "false"} />
             <div className="space-y-1">
-              <label htmlFor="name" className="block text-sm font-medium text-foreground">
+              <Label htmlFor="name" className="text-sm font-medium text-foreground">
                 اسمك
-              </label>
-              <input
+              </Label>
+              <Input
                 id="name"
                 name="name"
                 type="text"
                 autoComplete="name"
-                className={INPUT_CLS}
+                className="rounded-lg py-2.5 focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:border-accent"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
               />
               {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
             </div>
             <div className="space-y-1">
-              <label htmlFor="email" className="block text-sm font-medium text-foreground">
+              <Label htmlFor="email" className="text-sm font-medium text-foreground">
                 البريد الإلكتروني
-              </label>
-              <input
+              </Label>
+              <Input
                 id="email"
                 name="email"
                 type="email"
                 autoComplete="email"
-                className={INPUT_CLS}
+                className="rounded-lg py-2.5 focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:border-accent"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
               />
@@ -264,16 +283,16 @@ export function SignupForm({ serverPlans, country, countrySlug }: SignupFormProp
             </div>
 
             <div className="space-y-1">
-              <label htmlFor="phone" className="block text-sm font-medium text-foreground">
+              <Label htmlFor="phone" className="text-sm font-medium text-foreground">
                 رقم الجوال
-              </label>
+              </Label>
               <div className="flex gap-2">
-                <input
+                <Input
                   id="phone"
                   name="phone"
                   type="tel"
                   autoComplete="tel"
-                  className={INPUT_CLS}
+                  className="rounded-lg py-2.5 focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:border-accent"
                   value={phone}
                   onChange={(event) => setPhone(event.target.value)}
                   placeholder={country === "SA" ? "5XXXXXXXXX" : "01XXXXXXXXX"}
@@ -289,14 +308,14 @@ export function SignupForm({ serverPlans, country, countrySlug }: SignupFormProp
             </div>
 
             <div className="space-y-1">
-              <label htmlFor="businessName" className="block text-sm font-medium text-foreground">
+              <Label htmlFor="businessName" className="text-sm font-medium text-foreground">
                 اسم النشاط التجاري (اختياري)
-              </label>
-              <input
+              </Label>
+              <Input
                 id="businessName"
                 name="businessName"
                 type="text"
-                className={INPUT_CLS}
+                className="rounded-lg py-2.5 focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:border-accent"
                 placeholder="مثال: متجر كلمات"
                 value={businessName}
                 onChange={(event) => setBusinessName(event.target.value)}
@@ -304,13 +323,13 @@ export function SignupForm({ serverPlans, country, countrySlug }: SignupFormProp
             </div>
 
             <div className="space-y-1">
-              <label htmlFor="businessType" className="block text-sm font-medium text-foreground">
+              <Label htmlFor="businessType" className="text-sm font-medium text-foreground">
                 نوع النشاط (اختياري)
-              </label>
-              <textarea
+              </Label>
+              <Textarea
                 id="businessType"
                 name="businessType"
-                className={INPUT_CLS}
+                className="rounded-lg py-2.5 min-h-[80px] focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:border-accent"
                 rows={3}
                 placeholder="مثال: عيادة أسنان، متجر إلكتروني، شركة خدمات B2B..."
                 value={businessType}
@@ -368,7 +387,7 @@ export function SignupForm({ serverPlans, country, countrySlug }: SignupFormProp
             ))}
           </ul>
         </section>
-      </div>
+      </Card>
     </div>
   );
 }

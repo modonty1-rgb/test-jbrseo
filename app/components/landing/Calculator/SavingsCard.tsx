@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "@/app/components/link";
+import { Card } from "@/app/components/ui/card";
 import {
   CALCULATOR_SAVINGS_CARD,
   CALCULATOR_WITH_CARD,
@@ -33,7 +34,7 @@ export default function SavingsCard({
   formatMoney: (n: number) => string;
 }) {
   return (
-    <div className="relative mb-5 overflow-hidden rounded-2xl bg-linear-to-tr from-primary via-primary/80 to-primary p-8 sm:p-10">
+    <Card className="relative mb-5 overflow-hidden rounded-2xl border-0 bg-linear-to-tr from-primary via-primary/80 to-primary p-8 text-primary-foreground shadow-lg sm:p-10">
       {/* Radial glow */}
       <div
         aria-hidden
@@ -171,6 +172,6 @@ export default function SavingsCard({
       <p className="relative mt-5 text-center text-[11px] text-white/25">
         {CALCULATOR_SAVINGS_CARD.footnote}
       </p>
-    </div>
+    </Card>
   );
 }

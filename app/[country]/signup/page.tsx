@@ -18,8 +18,8 @@ export async function generateMetadata({
     return { title: "التسجيل — JBRSEO" };
   }
   return {
-    title: "التسجيل المبكر",
-    description: "سجّل اهتمامك وكن من أوائل المستفيدين عند الإطلاق.",
+    title: "التسجيل — JBRSEO",
+    description: "أكمل بياناتك واختر خطتك للبدء مع JBRSEO.",
     robots: { index: false, follow: false },
   };
 }

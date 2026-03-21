@@ -1,5 +1,6 @@
 import Link from "@/app/components/link";
 import { Button } from "@/app/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
 import type { Metadata } from "next";
 import {
   isSupportedCountrySlug,
@@ -82,26 +83,28 @@ export default async function CountrySignupThankYouPage({
             شكراً لتسجيلك!
           </h1>
           <p className="text-base text-muted-foreground leading-relaxed max-w-md mx-auto">
-            استلمنا بياناتك وسنتواصل معك قريباً عند تفعيل التسجيل الكامل.
+            استلمنا بياناتك وسيراجعها الفريق ثم يتواصل معك خلال أوقات العمل.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-6 text-start space-y-3 shadow-lg">
-          <p className="text-sm font-semibold text-foreground">ما الذي يحدث بعد ذلك؟</p>
-          <ul className="space-y-2.5">
+        <Card className="border-border/60 bg-card/60 backdrop-blur-sm shadow-lg text-start">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-semibold">ما الذي يحدث بعد ذلك؟</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2.5 pt-0">
             {[
-              "ستصلك رسالة تأكيد على بريدك الإلكتروني",
-              "سيتواصل معك فريقنا خلال 24 ساعة",
+              "نراجع طلبك ونطابقه مع الخطة التي اخترتها",
+              "سيتواصل معك فريقنا خلال 24 ساعة عمل عند الحاجة",
             ].map((step, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm text-foreground/80">
+              <div key={i} className="flex items-start gap-3 text-sm text-foreground/80">
                 <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/20 text-[11px] font-bold text-accent">
                   {i + 1}
                 </span>
                 {step}
-              </li>
+              </div>
             ))}
-          </ul>
-        </div>
+          </CardContent>
+        </Card>
 
         <div className="flex justify-center">
           <Button

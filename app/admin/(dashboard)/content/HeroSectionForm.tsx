@@ -3,6 +3,9 @@
 import type { StaticLanding } from "@/app/content/landing/types";
 import type { SupportedCountry } from "@/lib/landing-content.types";
 import { updateHeroSection } from "@/app/actions/content-sections";
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
+import { Textarea } from "@/app/components/ui/textarea";
 import { ConfirmSaveDialog } from "../components/ConfirmSaveDialog";
 
 type HeroSectionFormProps = {
@@ -47,7 +50,7 @@ export function HeroSectionForm({ hero, country }: HeroSectionFormProps) {
 
       <label className="flex flex-col gap-1 text-xs font-semibold text-muted-foreground">
         إثبات
-        <input
+        <Input
           name="proof"
           defaultValue={hero.proof}
           className="rounded-md border border-border bg-background px-2 py-1 text-sm"
@@ -57,7 +60,7 @@ export function HeroSectionForm({ hero, country }: HeroSectionFormProps) {
       <div className="grid gap-3 md:grid-cols-2">
         <label className="flex flex-col gap-1 text-xs font-semibold text-muted-foreground">
           العنوان الرئيسي - السطر ١
-          <input
+          <Input
             name="h1Line1"
             defaultValue={hero.h1Line1}
             className="rounded-md border border-border bg-background px-2 py-1 text-sm"
@@ -65,7 +68,7 @@ export function HeroSectionForm({ hero, country }: HeroSectionFormProps) {
         </label>
         <label className="flex flex-col gap-1 text-xs font-semibold text-muted-foreground">
           العنوان الرئيسي - السطر ٢
-          <input
+          <Input
             name="h1Line2"
             defaultValue={hero.h1Line2}
             className="rounded-md border border-border bg-background px-2 py-1 text-sm"
@@ -75,7 +78,7 @@ export function HeroSectionForm({ hero, country }: HeroSectionFormProps) {
 
       <label className="flex flex-col gap-1 text-xs font-semibold text-muted-foreground">
         نص فرعي
-        <textarea
+        <Textarea
           name="sub"
           defaultValue={hero.sub}
           className="min-h-[70px] rounded-md border border-border bg-background px-2 py-1 text-sm"
@@ -95,7 +98,7 @@ export function HeroSectionForm({ hero, country }: HeroSectionFormProps) {
               </div>
               <label className="flex flex-col gap-1 text-[11px] text-muted-foreground">
                 اعتراض
-                <input
+                <Input
                   name={`benefits_${i}_objection`}
                   defaultValue={b.objection}
                   className="rounded-md border border-border bg-background px-2 py-1 text-xs"
@@ -103,7 +106,7 @@ export function HeroSectionForm({ hero, country }: HeroSectionFormProps) {
               </label>
               <label className="flex flex-col gap-1 text-[11px] text-muted-foreground">
                 إجابة
-                <textarea
+                <Textarea
                   name={`benefits_${i}_answer`}
                   defaultValue={b.answer}
                   className="min-h-[50px] rounded-md border border-border bg-background px-2 py-1 text-xs"
@@ -116,14 +119,14 @@ export function HeroSectionForm({ hero, country }: HeroSectionFormProps) {
 
       <label className="flex flex-col gap-1 text-xs font-semibold text-muted-foreground">
         عناصر الثقة (سطر لكل عنصر)
-        <textarea
+        <Textarea
           name="trustLines"
           defaultValue={trustText}
           className="min-h-[70px] rounded-md border border-border bg-background px-2 py-1 text-sm"
         />
       </label>
 
-      <button
+      <Button
         type="submit"
         id="hero-form-submit"
         className="hidden"

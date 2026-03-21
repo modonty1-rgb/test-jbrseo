@@ -1,15 +1,29 @@
-import { Building2, Landmark, Briefcase, GraduationCap, Plane } from "lucide-react";
+const CLIENTS = [
+  "آفاق للاستشارات",
+  "زوايا العقارية",
+  "عيادات النور",
+  "منصة إدراك",
+  "رحلاتي للسياحة",
+  "نخبة المحاسبين",
+  "ديار التطوير",
+  "رواد التجارة",
+];
 
 export function HeroTrustBar() {
   return (
-    <div className="w-full flex flex-col items-center justify-center opacity-70 mt-6 md:mt-10 pb-16">
-      <p className="text-sm text-muted-foreground font-semibold mb-6">وثق بنا +١٢٠ نشاط تجاري سعودي ومصري</p>
-      <div className="flex flex-wrap justify-center gap-8 md:gap-16 items-center text-muted-foreground grayscale">
-        <div className="flex items-center gap-2 font-bold"><Landmark className="w-6 h-6" /> آفاق للاستشارات</div>
-        <div className="flex items-center gap-2 font-bold"><Briefcase className="w-6 h-6" /> زوايا العقارية</div>
-        <div className="flex items-center gap-2 font-bold"><Building2 className="w-6 h-6" /> عيادات النور</div>
-        <div className="flex items-center gap-2 font-bold"><GraduationCap className="w-6 h-6" /> منصة إدراك</div>
-        <div className="flex items-center gap-2 font-bold"><Plane className="w-6 h-6" /> رحلاتي للسياحة</div>
+    <div className="w-full border-t border-border/40 mt-6 py-5">
+      <p className="mb-4 text-center text-[11px] font-semibold uppercase tracking-widest text-muted-foreground/60">
+        يثق بنا +١٢٠ نشاط تجاري في السعودية ومصر
+      </p>
+      <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-2.5 px-5 sm:px-8">
+        {CLIENTS.slice(0, 6).map((name) => (
+          <span
+            key={name}
+            className="inline-flex items-center whitespace-nowrap rounded-full border border-border/50 bg-background px-4 py-1.5 text-[12px] font-semibold text-muted-foreground/80 shadow-sm"
+          >
+            {name}
+          </span>
+        ))}
       </div>
     </div>
   );

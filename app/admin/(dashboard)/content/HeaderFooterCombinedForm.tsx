@@ -3,6 +3,8 @@
 import type { StaticLanding } from "@/app/content/landing/types";
 import type { SupportedCountry } from "@/lib/landing-content.types";
 import { updateHeaderFooterSections } from "@/app/actions/content-sections";
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
 import { ConfirmSaveDialog } from "../components/ConfirmSaveDialog";
 
 type HeaderFooterCombinedFormProps = {
@@ -51,7 +53,7 @@ export function HeaderFooterCombinedForm({
         </h3>
         <label className="flex flex-col gap-1 text-xs font-semibold text-muted-foreground">
           سطر الهيدر (اختياري)
-          <input
+          <Input
             name="bannerText"
             defaultValue={header.bannerText ?? ""}
             placeholder="فارغ = إخفاء الشريط في الموقع العام"
@@ -66,7 +68,7 @@ export function HeaderFooterCombinedForm({
         </h3>
         <label className="flex flex-col gap-1 text-xs font-semibold text-muted-foreground">
           الشعار (Tagline)
-          <input
+          <Input
             name="tagline"
             defaultValue={footer.tagline}
             className="rounded-md border border-border bg-background px-2 py-1 text-sm"
@@ -74,7 +76,7 @@ export function HeaderFooterCombinedForm({
         </label>
         <label className="flex flex-col gap-1 text-xs font-semibold text-muted-foreground">
           الوصف
-          <input
+          <Input
             name="desc"
             defaultValue={footer.desc}
             className="rounded-md border border-border bg-background px-2 py-1 text-sm"
@@ -82,7 +84,7 @@ export function HeaderFooterCombinedForm({
         </label>
       </div>
 
-      <button
+      <Button
         type="submit"
         id="header-footer-form-submit"
         className="hidden"
