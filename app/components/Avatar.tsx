@@ -1,3 +1,6 @@
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { cl } from "@/helpers/cloudinary";
 import { cn } from "@/lib/utils";
@@ -27,6 +30,18 @@ function getGradient(name: string): string {
   return GRADIENTS[n % GRADIENTS.length];
 }
 
+function isValidImageSrc(s: string): boolean {
+  const t = s.trim();
+  if (!t) return false;
+  if (t.startsWith("/")) return true;
+  try {
+    const u = new URL(t);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 type AvatarProps = {
   name: string;
   src?: string | null;
@@ -36,9 +51,23 @@ type AvatarProps = {
 
 const sizeClasses = { sm: "h-9 w-9 text-[10px]", md: "h-10 w-10 sm:h-12 sm:w-12 text-[11px]" } as const;
 
-export function Avatar({ name, src, size = "md", className = "" }: AvatarProps) {
-  const effectiveSrc = src?.trim();
-  const usePlaceholder = !effectiveSrc || effectiveSrc === PLACEHOLDER_AVATAR;
+export function Avatar({ name, src, size = "md", className = "" }: AvatarProps): React.JSX.Element {
+  const effectiveSrc = src?.trim() ?? "";
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgError(false);
+  }, [effectiveSrc]);
+
+  const onImgError = useCallback(() => {
+    setImgError(true);
+  }, []);
+
+  const usePlaceholder =
+    imgError ||
+    !isValidImageSrc(effectiveSrc) ||
+    effectiveSrc === PLACEHOLDER_AVATAR;
+
   const sizeClass = sizeClasses[size];
 
   if (usePlaceholder) {
@@ -46,7 +75,9 @@ export function Avatar({ name, src, size = "md", className = "" }: AvatarProps) 
       <div
         className={cn(
           "flex shrink-0 items-center justify-center overflow-hidden font-bold tracking-tight text-white ring-2 ring-white/20",
-          sizeClass, className, "rounded-full"
+          sizeClass,
+          className,
+          "rounded-full"
         )}
         style={{ background: getGradient(name) }}
         aria-hidden
@@ -64,6 +95,7 @@ export function Avatar({ name, src, size = "md", className = "" }: AvatarProps) 
         fill
         className="object-cover rounded-full"
         sizes={size === "sm" ? "40px" : "48px"}
+        onError={onImgError}
       />
     </div>
   );

@@ -12,5 +12,5 @@ export const landingImages = {
   logoWhite: CLOUDINARY_LOGO,
   logoLight: CLOUDINARY_LOGO,
   contactAvatar:
-    process.env.NEXT_PUBLIC_AVATAR_FALLBACK_URL ?? AVATAR_FALLBACK_OPTIMIZED,
+    process.env.NEXT_PUBLIC_AVATAR_FALLBACK_URL?.trim() || AVATAR_FALLBACK_OPTIMIZED,
 } as const;

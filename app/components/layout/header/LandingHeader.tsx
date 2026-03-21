@@ -18,7 +18,7 @@ function DesktopNav({ navLinks }: { navLinks: NavLinkItem[] }) {
           href={href}
           className="
             relative rounded-lg px-3 py-2
-            text-[13.5px] font-semibold text-white/90
+            text-sm font-semibold text-white/90
             transition-colors duration-200
             hover:bg-white/10 hover:text-white
             after:absolute after:bottom-1 after:start-3 after:end-3
@@ -75,8 +75,8 @@ export function LandingHeader({
         <div
           className="
             flex flex-wrap items-center justify-center gap-1.5
-            px-3 py-2 text-center text-[11px] font-bold
-            sm:px-4 sm:py-2.5 sm:text-[11.5px]
+            px-3 py-2 text-center text-sm font-bold
+            sm:px-4 sm:py-2.5
           "
           style={{
             background: "var(--accent)",
@@ -96,7 +96,7 @@ export function LandingHeader({
             className="
               inline-flex items-center gap-1 rounded-full
               border border-white/40 bg-white/15
-              px-2.5 py-0.5 text-[10.5px] font-black
+              px-2.5 py-0.5 text-sm font-black
               transition-colors hover:bg-white/25
             "
           >
@@ -112,7 +112,7 @@ export function LandingHeader({
           <ThemeToggle />
           <Link
             href={pricingHref}
-            className="hidden sm:inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-[12.5px] font-black text-white shadow-[0_4px_16px_color-mix(in_oklch,var(--accent)_40%,transparent)] transition-all duration-200 hover:bg-accent/90 hover:scale-[1.03] sm:px-5 sm:text-[13.5px]"
+            className="hidden sm:inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-sm font-black text-white shadow-[0_4px_16px_color-mix(in_oklch,var(--accent)_40%,transparent)] transition-all duration-200 hover:bg-accent/90 hover:scale-[1.03] sm:px-5"
           >
             {primaryCtaLabel}
           </Link>

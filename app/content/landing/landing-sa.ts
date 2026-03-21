@@ -41,6 +41,15 @@ export const landingSA: StaticLanding = {
     ],
     trust: ["بدون بطاقة ائتمان", "ضمان استرجاع ١٤ يوم", "إلغاء في أي وقت"],
     guaranteeBadge: "🔒 ضمان استرجاع ١٤ يوماً",
+    trustBarHeadline: "يثق بنا +١٢٠ نشاط تجاري في السعودية ومصر",
+    trustBarClients: [
+      { name: "آفاق للاستشارات", logoUrl: "" },
+      { name: "زوايا العقارية", logoUrl: "" },
+      { name: "عيادات النور", logoUrl: "" },
+      { name: "منصة إدراك", logoUrl: "" },
+      { name: "رحلاتي للسياحة", logoUrl: "" },
+      { name: "نخبة المحاسبين", logoUrl: "" },
+    ],
   },
   whyNow: {
     eyebrow: "لماذا الآن",

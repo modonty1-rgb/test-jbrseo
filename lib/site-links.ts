@@ -4,21 +4,13 @@ export type NavLinkItem = { href: string; label: string };
 export type FooterLinkItem = { label: string; href: string };
 
 const NAV_SA: NavLinkItem[] = [
-  { href: "/about", label: "من نحن" },
-  { href: "/#how-it-works", label: "كيف نعمل" },
-  { href: "/#why-now", label: "لماذا الآن" },
   { href: "/#outcomes", label: "النتائج" },
-  { href: "/#social-proof", label: "الشهادات" },
   { href: "/#pricing", label: "الأسعار" },
   { href: "/#faq", label: "الأسئلة" },
 ];
 
 const NAV_EG: NavLinkItem[] = [
-  { href: "/about", label: "من نحن" },
-  { href: "/#how-it-works", label: "كيف نعمل" },
-  { href: "/#why-now", label: "ليه دلوقتي" },
   { href: "/#outcomes", label: "النتائج" },
-  { href: "/#social-proof", label: "الشهادات" },
   { href: "/#pricing", label: "الأسعار" },
   { href: "/#faq", label: "الأسئلة" },
 ];

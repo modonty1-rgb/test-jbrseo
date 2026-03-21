@@ -41,6 +41,15 @@ export const landingEG: StaticLanding = {
     ],
     trust: ["من غير بطاقة ائتمان", "ضمان استرداد ١٤ يوم", "تلغي امتى ما تحب"],
     guaranteeBadge: "🔒 ضمان استرجاع ١٤ يوماً",
+    trustBarHeadline: "بيثق بينا +١٢٠ نشاط تجاري في مصر والسعودية",
+    trustBarClients: [
+      { name: "آفاق للاستشارات", logoUrl: "" },
+      { name: "زوايا العقارية", logoUrl: "" },
+      { name: "عيادات النور", logoUrl: "" },
+      { name: "منصة إدراك", logoUrl: "" },
+      { name: "رحلاتي للسياحة", logoUrl: "" },
+      { name: "نخبة المحاسبين", logoUrl: "" },
+    ],
   },
   whyNow: {
     eyebrow: "ليه دلوقتي",

@@ -1,29 +1,84 @@
-const CLIENTS = [
+import Image from "next/image";
+import Link from "@/app/components/link";
+import type { StaticLanding, TrustBarClient } from "@/app/content/landing/types";
+
+const FALLBACK_CLIENTS = [
   "آفاق للاستشارات",
   "زوايا العقارية",
   "عيادات النور",
   "منصة إدراك",
   "رحلاتي للسياحة",
   "نخبة المحاسبين",
-  "ديار التطوير",
-  "رواد التجارة",
 ];
 
-export function HeroTrustBar() {
+const FALLBACK_HEADLINE = "يثق بنا +١٢٠ نشاط تجاري في السعودية ومصر";
+
+type HeroTrustBarProps = {
+  hero?: StaticLanding["hero"];
+};
+
+function LogoItem({ client }: { client: TrustBarClient }) {
+  const inner = (
+    <span className="flex flex-col items-center gap-1">
+      <Image
+        src={client.logoUrl}
+        alt={client.name}
+        width={100}
+        height={32}
+        className="h-6 w-auto object-contain opacity-60 transition-opacity hover:opacity-90 sm:h-7"
+      />
+      <span className="text-[10px] font-medium text-muted-foreground/60">{client.name}</span>
+    </span>
+  );
+
+  if (client.href) {
+    return (
+      <Link
+        href={client.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={client.name}
+      >
+        {inner}
+      </Link>
+    );
+  }
+
+  return inner;
+}
+
+function PillItem({ name }: { name: string }) {
+  return (
+    <span className="inline-flex items-center whitespace-nowrap rounded-full border border-border/50 bg-background px-4 py-1.5 text-[12px] font-semibold text-muted-foreground/80 shadow-sm">
+      {name}
+    </span>
+  );
+}
+
+export function HeroTrustBar({ hero }: HeroTrustBarProps) {
+  const headline = hero?.trustBarHeadline || FALLBACK_HEADLINE;
+  const clients = hero?.trustBarClients;
+
+  const hasLogos = Array.isArray(clients) && clients.some((c) => c.logoUrl);
+  const hasNames = Array.isArray(clients) && clients.length > 0;
+
   return (
     <div className="w-full border-t border-border/40 mt-6 py-5">
       <p className="mb-4 text-center text-[11px] font-semibold uppercase tracking-widest text-muted-foreground/60">
-        يثق بنا +١٢٠ نشاط تجاري في السعودية ومصر
+        {headline}
       </p>
-      <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-2.5 px-5 sm:px-8">
-        {CLIENTS.slice(0, 6).map((name) => (
-          <span
-            key={name}
-            className="inline-flex items-center whitespace-nowrap rounded-full border border-border/50 bg-background px-4 py-1.5 text-[12px] font-semibold text-muted-foreground/80 shadow-sm"
-          >
-            {name}
-          </span>
-        ))}
+      <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-3 px-5 sm:px-8">
+        {hasLogos ? (
+          clients!
+            .filter((c) => c.logoUrl)
+            .map((client, i) => (
+              <LogoItem key={`${client.logoUrl}-${client.name}-${i}`} client={client} />
+            ))
+        ) : hasNames ? (
+          clients!.map((c, i) => <PillItem key={`${c.name}-${i}`} name={c.name} />)
+        ) : (
+          FALLBACK_CLIENTS.map((name, i) => <PillItem key={`${name}-${i}`} name={name} />)
+        )}
       </div>
     </div>
   );

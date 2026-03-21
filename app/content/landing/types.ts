@@ -91,6 +91,12 @@ export type TeamPageMember = {
   avatarUrl?: string;
 };
 
+export type TrustBarClient = {
+  name: string;
+  logoUrl: string;
+  href?: string;
+};
+
 export type StaticLanding = {
   hero: {
     sectionImage?: string;
@@ -101,6 +107,8 @@ export type StaticLanding = {
     benefits: { objection: string; answer: string }[];
     trust: string[];
     guaranteeBadge?: string;
+    trustBarHeadline?: string;
+    trustBarClients?: TrustBarClient[];
   };
   whyNow: {
     sectionImage?: string;

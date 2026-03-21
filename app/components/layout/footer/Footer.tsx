@@ -10,7 +10,12 @@ import { RoundSnapchat } from "@/app/components/icons/snapchat";
 import { TiktokLogoLight } from "@/app/components/icons/tiktok";
 import type { SupportedCountry } from "@/lib/landing-content.types";
 import { getFooterLinks, getWhatsAppLink, LEGAL_LINKS } from "@/lib/site-links";
+import Image from "next/image";
 import { HeaderLogo } from "@/app/components/layout/HeaderLogo";
+
+const MODONTY_LOGO_URL =
+  "https://res.cloudinary.com/dfegnpgwx/image/upload/v1769683590/modontyLogo_ftf4yf.png";
+import { APP_VERSION } from "@/lib/app-version";
 
 const BRAND_NAME = "JBRSEO";
 const COPYRIGHT = "© جميع الحقوق محفوظة — JBRSEO";
@@ -77,23 +82,40 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
               <HeaderLogo logoHref={homeHref} />
             </div>
 
-            <p className="mb-3 inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-emerald-400 before:content-[''] before:inline-block before:h-[1.5px] before:w-4 before:shrink-0 before:rounded-full before:bg-emerald-400">
+            <p className="mb-3 inline-flex items-center gap-1.5 text-sm font-bold tracking-wider text-emerald-400 before:content-[''] before:inline-block before:h-[1.5px] before:w-4 before:shrink-0 before:rounded-full before:bg-emerald-400">
               {footer.tagline}
             </p>
 
-            <p className="mb-5 max-w-[240px] text-[13px] leading-[1.75] text-white/75">
+            <p className="mb-5 max-w-[240px] text-sm leading-[1.75] text-white/75">
               {footer.desc}
             </p>
 
-            <a
+            <Link
               href={waLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[13px] font-bold text-white bg-white/10 border border-white/20 transition-all duration-200 hover:bg-emerald-500 hover:text-white hover:border-emerald-400"
+              className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold text-white bg-white/10 border border-white/20 transition-all duration-200 hover:bg-emerald-500 hover:text-white hover:border-emerald-400"
             >
               <WhatsAppIcon />
               {WA_LABEL}
-            </a>
+            </Link>
+
+            <Link
+              href="https://modonty.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-2 opacity-50 transition-opacity hover:opacity-80"
+              aria-label="مدعوم بـ مدونتي"
+            >
+              <span className="text-xs text-white/60">مدعوم بـ</span>
+              <Image
+                src={MODONTY_LOGO_URL}
+                alt="مدونتي"
+                width={72}
+                height={22}
+                className="h-5 w-auto brightness-0 invert"
+              />
+            </Link>
           </div>
 
           {/* NAV COL */}
@@ -106,7 +128,7 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
                 <li key={i}>
                   <Link
                     href={l.href}
-                    className="group flex items-center gap-1.5 text-[13.5px] font-semibold text-white/75 transition-colors duration-200 hover:text-white before:content-[''] before:inline-block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-transparent before:transition-colors group-hover:before:bg-emerald-400"
+                    className="group flex items-center gap-1.5 text-sm font-semibold text-white/75 transition-colors duration-200 hover:text-white before:content-[''] before:inline-block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-transparent before:transition-colors group-hover:before:bg-emerald-400"
                   >
                     {l.label}
                   </Link>
@@ -118,7 +140,7 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
           {/* SOCIALS COL */}
           {socialLinks.length > 0 && (
           <div>
-            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-white/80">
+            <p className="mb-4 text-sm font-black uppercase tracking-widest text-white/80">
                 تابعنا
               </p>
               <div className="flex flex-wrap gap-2">
@@ -141,15 +163,19 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
 
         {/* ── BOTTOM ROW ── */}
         <div className="flex flex-col items-center justify-between gap-3 pt-6 sm:flex-row">
-          <p className="text-[12px] text-white/80">
+          <p className="text-sm text-white/80">
             {COPYRIGHT}
+            <span className="text-white/45" translate="no">
+              {" "}
+              · v{APP_VERSION}
+            </span>
           </p>
           <nav className="flex gap-5">
             {LEGAL_LINKS.map((l, i) => (
               <Link
                 key={i}
                 href={l.href}
-                className="text-[12px] text-white/65 transition-colors duration-200 hover:text-white"
+                className="text-sm text-white/65 transition-colors duration-200 hover:text-white"
               >
                 {l.label}
               </Link>

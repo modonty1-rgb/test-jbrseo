@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "@/app/components/link";
 import type { Plan, PricingUI } from "@/app/content/landing/price-section-types";
+import { applyPricingUiPlaceholders } from "@/lib/pricing-ui-placeholders";
 import { Icon } from "@/app/components/Icon";
 import { Button } from "@/app/components/ui/button";
 import { Card } from "@/app/components/ui/card";
@@ -120,7 +121,13 @@ export function PlanCard({
                   {currency}
                 </span>
               </div>
-              <p className={`text-xs mt-1.5 ${F ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{ui.billingAnnual}</p>
+              <p className={`text-xs mt-1.5 ${F ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                {applyPricingUiPlaceholders(ui.billingAnnual, {
+                  n: price.toLocaleString(),
+                  c: currency,
+                  total: annualTotal.toLocaleString(),
+                })}
+              </p>
 
               <details className={`mt-2 group ${F ? "text-primary-foreground/90" : "text-foreground"}`}>
                 <summary
@@ -147,12 +154,18 @@ export function PlanCard({
                   </div>
                   {ui.annualAvgMonthly ? (
                     <p className={`text-sm font-semibold tabular-nums ${F ? "text-primary-foreground/90" : "text-foreground/90"}`}>
-                      {ui.annualAvgMonthly.replace("{n}", price.toLocaleString()).replace("{c}", currency)}
+                      {applyPricingUiPlaceholders(ui.annualAvgMonthly, {
+                        n: price.toLocaleString(),
+                        c: currency,
+                      })}
                     </p>
                   ) : null}
                   {perMonthOver18 > 0 && ui.annualEquiv18 ? (
                     <p className={`text-xs leading-relaxed ${F ? "text-primary-foreground/75" : "text-muted-foreground"}`}>
-                      {ui.annualEquiv18.replace("{n}", perMonthOver18.toLocaleString()).replace("{c}", currency)}
+                      {applyPricingUiPlaceholders(ui.annualEquiv18, {
+                        n: perMonthOver18.toLocaleString(),
+                        c: currency,
+                      })}
                     </p>
                   ) : null}
                   {savings > 0 ? (
@@ -161,7 +174,11 @@ export function PlanCard({
                         className={`inline-flex items-center gap-1 text-xs font-bold px-3 py-1 rounded-full w-fit
                   ${F ? "bg-primary-foreground/20 text-primary-foreground border border-primary-foreground/25" : "bg-success/15 text-success-foreground border border-success/30"}`}
                       >
-                        <Icon emoji="✓" /> {ui.savedYearly.replace("{n}", savings.toLocaleString()).replace("{c}", currency)}
+                        <Icon emoji="✓" />{" "}
+                        {applyPricingUiPlaceholders(ui.savedYearly, {
+                          n: savings.toLocaleString(),
+                          c: currency,
+                        })}
                       </span>
                       <span
                         className={`inline-flex items-center gap-1 text-xs font-bold px-3 py-1 rounded-full w-fit
@@ -184,7 +201,12 @@ export function PlanCard({
                   {currency} {ui.perMonth}
                 </span>
               </div>
-              <p className={`text-xs mt-1.5 ${F ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{ui.billingMonthly}</p>
+              <p className={`text-xs mt-1.5 ${F ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                {applyPricingUiPlaceholders(ui.billingMonthly, {
+                  n: price.toLocaleString(),
+                  c: currency,
+                })}
+              </p>
             </>
           )}
         </div>

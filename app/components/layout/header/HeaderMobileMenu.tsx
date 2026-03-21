@@ -79,7 +79,7 @@ export function HeaderMobileMenu({
         <div className="mt-auto border-t border-border/30 px-4 pt-4 space-y-2">
           {showBanner && (
             <div
-              className="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[12px] font-bold"
+              className="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold"
               style={{
                 background: "oklch(0.14 0.13 275 / 6%)",
                 border: "1px solid oklch(0.14 0.13 275 / 15%)",

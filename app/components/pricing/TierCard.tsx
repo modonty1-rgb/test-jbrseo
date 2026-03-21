@@ -4,6 +4,7 @@ import type { Plan, PricingUI } from "@/app/content/landing/price-section-types"
 import { Icon } from "@/app/components/Icon";
 import { Card } from "@/app/components/ui/card";
 import { Badge } from "@/app/components/ui/badge";
+import { applyPricingUiPlaceholders } from "@/lib/pricing-ui-placeholders";
 import { cn } from "@/lib/utils";
 
 type TierCardProps = {
@@ -73,7 +74,10 @@ export function TierCard({ plan, annual, ui, currency, href }: TierCardProps) {
             </div>
             {ui.annualAvgMonthly ? (
               <p className="mt-1 text-[11px] font-semibold text-foreground/90 tabular-nums">
-                {ui.annualAvgMonthly.replace("{n}", price.toLocaleString("ar-EG")).replace("{c}", currency)}
+                {applyPricingUiPlaceholders(ui.annualAvgMonthly, {
+                  n: price.toLocaleString("ar-EG"),
+                  c: currency,
+                })}
               </p>
             ) : (
               <p className="mt-1 text-[11px] font-semibold text-foreground/90 tabular-nums">
@@ -83,11 +87,18 @@ export function TierCard({ plan, annual, ui, currency, href }: TierCardProps) {
             )}
             {per18 > 0 && ui.annualEquiv18 ? (
               <p className="mt-0.5 text-[10px] text-muted-foreground leading-snug">
-                {ui.annualEquiv18.replace("{n}", per18.toLocaleString("ar-EG")).replace("{c}", currency)}
+                {applyPricingUiPlaceholders(ui.annualEquiv18, {
+                  n: per18.toLocaleString("ar-EG"),
+                  c: currency,
+                })}
               </p>
             ) : null}
             <p className="mt-1 text-[11px] text-muted-foreground">
-              {ui.billingAnnual.replace(/\{n\}/g, priceLabel).replace(/\{c\}/g, currency)}
+              {applyPricingUiPlaceholders(ui.billingAnnual, {
+                n: price.toLocaleString("ar-EG"),
+                c: currency,
+                total: annualTotal.toLocaleString("ar-EG"),
+              })}
             </p>
           </>
         ) : (
@@ -98,7 +109,12 @@ export function TierCard({ plan, annual, ui, currency, href }: TierCardProps) {
               </span>
               <span className="text-[11px] text-muted-foreground">{ui.perMonth}</span>
             </div>
-            <p className="mt-1 text-[11px] text-muted-foreground">{ui.billingMonthly}</p>
+            <p className="mt-1 text-[11px] text-muted-foreground">
+              {applyPricingUiPlaceholders(ui.billingMonthly, {
+                n: price.toLocaleString("ar-EG"),
+                c: currency,
+              })}
+            </p>
           </>
         )}
       </div>

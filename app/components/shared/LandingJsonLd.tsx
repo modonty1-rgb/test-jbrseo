@@ -3,6 +3,11 @@ import { cl } from "@/helpers/cloudinary";
 
 function buildJsonLd(content: LandingContent) {
   const { seo, landing } = content;
+  const fallbackOrigin =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://www.jbrseo.com";
+  const pageUrl = seo.canonical?.trim() || fallbackOrigin;
+  const orgId = `${pageUrl.replace(/\/$/, "")}#organization`;
+
   const logoUrl = content.landingImages.logoWhite || cl(
     "https://res.cloudinary.com/dfegnpgwx/image/upload/v1771973886/jbrser_svg_ikxmnn.svg"
   );
@@ -19,9 +24,10 @@ function buildJsonLd(content: LandingContent) {
   const organization = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": orgId,
     name: "JBRSEO",
-    url: seo.canonical,
-    logo: logoUrl,
+    url: pageUrl,
+    logo: { "@type": "ImageObject", url: logoUrl },
     ...(socialUrls.length > 0 && { sameAs: socialUrls }),
   };
   const webSite = {
@@ -29,19 +35,32 @@ function buildJsonLd(content: LandingContent) {
     "@type": "WebSite",
     name: "JBRSEO",
     description: seo.description,
-    url: seo.canonical,
+    url: pageUrl,
     inLanguage: "ar",
-    publisher: { "@type": "Organization", name: "JBRSEO" },
+    publisher: { "@id": orgId },
   };
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: landing.faq.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: { "@type": "Answer", text: item.answer },
-    })),
-  };
+
+  const faqMainEntity = landing.faq
+    .map((item) => {
+      const name = item.question.trim();
+      const text = item.answer.trim();
+      if (!name || !text) return null;
+      return {
+        "@type": "Question" as const,
+        name,
+        acceptedAnswer: { "@type": "Answer" as const, text },
+      };
+    })
+    .filter((entry): entry is NonNullable<typeof entry> => entry !== null);
+
+  const faqPage =
+    faqMainEntity.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqMainEntity,
+        }
+      : null;
 
   const testimonialList =
     landing.socialProof.testimonials && landing.socialProof.testimonials.length > 0
@@ -61,11 +80,12 @@ function buildJsonLd(content: LandingContent) {
       itemReviewed: {
         "@type": "Organization" as const,
         name: "JBRSEO",
-        url: seo.canonical,
+        url: pageUrl,
       },
     }));
 
-  const scripts: object[] = [organization, webSite, faqPage];
+  const scripts: object[] = [organization, webSite];
+  if (faqPage) scripts.push(faqPage);
   if (reviewsList.length > 0) {
     scripts.push({
       "@context": "https://schema.org",

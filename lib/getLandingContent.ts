@@ -9,6 +9,23 @@ import { prisma } from "./prisma";
 import { staticPlansToPricingPlans } from "./static-plans-to-content";
 import { getLandingSectionOverride } from "./landing-sections";
 
+function mergeLandingSeo(
+  base: LandingContent["seo"],
+  override: unknown,
+): LandingContent["seo"] {
+  if (!override || typeof override !== "object" || Array.isArray(override)) {
+    return base;
+  }
+  const o = override as Record<string, unknown>;
+  const merged = { ...base };
+  for (const key of Object.keys(base) as (keyof LandingContent["seo"])[]) {
+    const v = o[key as string];
+    if (v === undefined || v === null) continue;
+    merged[key] = typeof v === "string" ? v : String(v);
+  }
+  return merged;
+}
+
 async function getStaticFallback(): Promise<LandingContent> {
   const [{ landing, seo }, { landingImages }, { footerTexts }] = await Promise.all([
     import("@/app/content/landing"),
@@ -28,17 +45,7 @@ async function getStaticFallback(): Promise<LandingContent> {
     },
     seo: {
       ...seo,
-      ogTitle: "",
-      ogDescription: "",
       ogImage: "",
-      ogImageWidth: "1200",
-      ogImageHeight: "630",
-      ogType: "website",
-      ogSiteName: "JBRSEO",
-      twitterCard: "summary_large_image",
-      twitterTitle: "",
-      twitterDescription: "",
-      twitterImage: "",
     },
     landingImages: {
       contactAvatar: landingImages.contactAvatar,
@@ -135,10 +142,7 @@ async function fetchLandingContent(country: SupportedCountry, industry?: string)
 
   const whatsappNumber = settingsRow?.whatsappNumber?.trim() ?? "";
 
-  const seo =
-    seoOverride && typeof seoOverride === "object" && !Array.isArray(seoOverride)
-      ? { ...base.seo, ...(seoOverride as Record<string, string>) }
-      : base.seo;
+  const seo = mergeLandingSeo(base.seo, seoOverride);
 
   const rawPricingHeadings =
     pricingTeaserOverride &&
@@ -167,7 +171,7 @@ async function fetchLandingContent(country: SupportedCountry, industry?: string)
   return {
     ...base,
     staticLanding: finalStaticLanding,
-    seo: seo as LandingContent["seo"],
+    seo,
     tracking,
     siteSettings: { ctaLabel, whatsappNumber },
     landingImages,

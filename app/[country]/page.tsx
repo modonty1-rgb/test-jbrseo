@@ -14,6 +14,8 @@ import {
 } from "@/lib/country-config";
 import { isAnnualFromBillingParam } from "@/lib/billing-search-param";
 import { getLandingContent } from "@/lib/getLandingContent";
+import { buildLandingOgMetadata } from "@/lib/landing-open-graph";
+import { resolveCanonicalForMetadata, resolveSiteOriginFromSeoCanonical } from "@/lib/seo-meta";
 import { getWhatsAppLink } from "@/lib/site-links";
 
 const sectionFallback = () => <section className="min-h-[200px]" aria-hidden />;
@@ -22,7 +24,10 @@ const SocialProof = dynamic(
   () => import("@/app/components/landing/SocialProof/SocialProof"),
   { loading: sectionFallback }
 );
-import ModontyPricing from "@/app/components/landing/price-section/price-section";
+const ModontyPricing = dynamic(
+  () => import("@/app/components/landing/price-section/price-section"),
+  { loading: sectionFallback }
+);
 const FAQ = dynamic<{ staticLanding: StaticLanding; country: import("@/lib/landing-content.types").SupportedCountry; ctaLabel?: string; whatsappNumber?: string }>(
   () => import("@/app/components/landing/FAQ/FAQ"),
   { loading: sectionFallback }
@@ -31,13 +36,6 @@ const FinalCTA = dynamic<{ staticLanding: StaticLanding; country: import("@/lib/
   () => import("@/app/components/landing/FinalCTA/FinalCTA"),
   { loading: sectionFallback }
 );
-
-function toAbsoluteUrl(pathOrUrl: string): string {
-  if (!pathOrUrl) return "";
-  if (pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://")) return pathOrUrl;
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://jbrseo.com";
-  return pathOrUrl.startsWith("/") ? `${base}${pathOrUrl}` : `${base}/${pathOrUrl}`;
-}
 
 export async function generateMetadata({
   params,
@@ -52,37 +50,17 @@ export async function generateMetadata({
   const countryCode = getCountryCodeFromSlug(slug as "sa" | "eg");
   const content = await getLandingContent(countryCode);
   const { seo: s } = content;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jbrseo.com";
-  const canonical = `${siteUrl.replace(/\/$/, "")}/${slug}`;
-  const ogImageUrl = s.ogImage ? toAbsoluteUrl(s.ogImage) : "";
-  const twitterImageUrl = s.twitterImage ? toAbsoluteUrl(s.twitterImage) : ogImageUrl;
-  const ogImages = ogImageUrl
-    ? [{ url: ogImageUrl, width: parseInt(s.ogImageWidth, 10) || 1200, height: parseInt(s.ogImageHeight, 10) || 630, alt: s.ogTitle || s.title }]
-    : undefined;
-  const twitterImages = twitterImageUrl ? [twitterImageUrl] : undefined;
-  return {
-    title: s.title,
-    description: s.description || "JBRSEO – وكالة سيو متخصصة تساعدك على الظهور الأول في نتائج البحث وتنمية أعمالك في السعودية ومصر.",
-    alternates: {
-      canonical,
-      languages: { ar: canonical },
-    },
-    openGraph: {
-      title: s.ogTitle || s.title,
-      description: s.ogDescription || s.description,
-      url: canonical,
-      locale: s.ogLocale || "ar_SA",
-      type: (s.ogType as "website") || "website",
-      siteName: s.ogSiteName || "JBRSEO",
-      images: ogImages,
-    },
-    twitter: {
-      card: (s.twitterCard as "summary_large_image") || "summary_large_image",
-      title: s.twitterTitle || s.title,
-      description: s.twitterDescription || s.description,
-      images: twitterImages,
-    },
-  };
+  const envSiteBase =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "").trim() || "https://www.jbrseo.com";
+  const siteBase = resolveSiteOriginFromSeoCanonical(s.canonical, envSiteBase);
+  const fallbackCanonical = `${siteBase}/${slug}`;
+  const canonical = resolveCanonicalForMetadata(s.canonical, fallbackCanonical);
+  return buildLandingOgMetadata({
+    seo: s,
+    canonical,
+    siteBase,
+    documentTitle: s.title,
+  });
 }
 
 export const revalidate = 60;
@@ -141,7 +119,7 @@ export default async function CountryHome({
       <LandingJsonLd content={content} />
       <section className="relative">
         <Hero content={content} staticLanding={mergedStaticLanding} country={countryCode} ctaLink={pricingCtaLink} ctaLabel={pricingCtaLabel} />
-        <HeroTrustBar />
+        <HeroTrustBar hero={mergedStaticLanding.hero} />
       </section>
       <section className="relative">
         <HowItWorks staticLanding={mergedStaticLanding} ctaLabel={pricingCtaLabel} ctaLink={pricingCtaLink} />

@@ -15,6 +15,7 @@ import {
 } from "@/lib/country-config";
 import { isAnnualFromBillingParam } from "@/lib/billing-search-param";
 import { getLandingContent } from "@/lib/getLandingContent";
+import { buildLandingOgMetadata } from "@/lib/landing-open-graph";
 import { getWhatsAppLink } from "@/lib/site-links";
 import { SUPPORTED_INDUSTRIES, type IndustryType } from "@/app/content/landing/industries";
 import { notFound } from "next/navigation";
@@ -34,13 +35,6 @@ const FinalCTA = dynamic<{ staticLanding: StaticLanding; country: import("@/lib/
   () => import("@/app/components/landing/FinalCTA/FinalCTA"),
   { loading: sectionFallback }
 );
-
-function toAbsoluteUrl(pathOrUrl: string): string {
-  if (!pathOrUrl) return "";
-  if (pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://")) return pathOrUrl;
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://jbrseo.com";
-  return pathOrUrl.startsWith("/") ? `${base}${pathOrUrl}` : `${base}/${pathOrUrl}`;
-}
 
 export function generateStaticParams() {
   const params: { country: string; industry: string }[] = [];
@@ -65,27 +59,17 @@ export async function generateMetadata({
   const countryCode = getCountryCodeFromSlug(slug as "sa" | "eg");
   const content = await getLandingContent(countryCode, industry);
   const { seo: s } = content;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jbrseo.com";
-  const canonical = `${siteUrl.replace(/\/$/, "")}/${slug}/${industry}`;
-  const ogImageUrl = s.ogImage ? toAbsoluteUrl(s.ogImage) : "";
-  const twitterImageUrl = s.twitterImage ? toAbsoluteUrl(s.twitterImage) : ogImageUrl;
-  
-  return {
-    title: `${s.title} | ${industry === "clinics" ? "للعيادات" : industry === "real-estate" ? "للعقارات" : "للمتاجر"}`,
-    description: s.description,
-    alternates: {
-      canonical,
-      languages: { ar: canonical },
-    },
-    openGraph: {
-      title: s.ogTitle || s.title,
-      description: s.ogDescription || s.description,
-      url: canonical,
-      locale: s.ogLocale || "ar_SA",
-      type: "website",
-      images: ogImageUrl ? [{ url: ogImageUrl }] : undefined,
-    },
-  };
+  const siteBase =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "").trim() || "https://www.jbrseo.com";
+  const canonical = `${siteBase}/${slug}/${industry}`;
+  const industrySuffix =
+    industry === "clinics" ? "للعيادات" : industry === "real-estate" ? "للعقارات" : "للمتاجر";
+  return buildLandingOgMetadata({
+    seo: s,
+    canonical,
+    siteBase,
+    documentTitle: `${s.title} | ${industrySuffix}`,
+  });
 }
 
 export const revalidate = 60;
@@ -136,7 +120,7 @@ export default async function IndustryHome({
       <LandingJsonLd content={content} />
       <section className="relative">
         <Hero content={content} staticLanding={mergedStaticLanding} country={countryCode} ctaLink={pricingCtaLink} ctaLabel={pricingCtaLabel} />
-        <HeroTrustBar />
+        <HeroTrustBar hero={mergedStaticLanding.hero} />
       </section>
       <section className="relative">
         <HowItWorks staticLanding={mergedStaticLanding} ctaLabel={pricingCtaLabel} ctaLink={pricingCtaLink} />
