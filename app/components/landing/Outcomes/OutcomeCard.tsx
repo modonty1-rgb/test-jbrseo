@@ -1,4 +1,5 @@
 import type { OutcomeItem } from "@/app/content/landing/types";
+import { Icon } from "@/app/components/Icon";
 
 type OutcomeCardProps = {
   item: OutcomeItem;
@@ -29,7 +30,7 @@ export function OutcomeCard({ item, index }: OutcomeCardProps) {
           border: `1.5px solid color-mix(in oklch, var(--${item.token}) 28%, transparent)`,
         }}
       >
-        {item.icon}
+        <Icon emoji={item.icon} className="w-6 h-6" />
       </div>
       <div
         className="mb-1.5 font-black leading-none tracking-[-0.03em]"

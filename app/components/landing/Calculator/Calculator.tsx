@@ -15,6 +15,7 @@ import IntroBlock from "./IntroBlock";
 import SavingsCard from "./SavingsCard";
 import WithPlanCard from "./WithPlanCard";
 import WithoutPlanCard from "./WithoutPlanCard";
+import { Icon } from "@/app/components/Icon";
 
 const SUB_M = 1299;
 const SUB_Y = SUB_M * 12;
@@ -53,7 +54,7 @@ function SliderRow({
           <span
             className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm ${iconBgClass}`}
           >
-            {icon}
+            <Icon emoji={icon} className="w-5 h-5" />
           </span>
           {label}
         </span>

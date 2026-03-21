@@ -61,7 +61,7 @@ export async function generateMetadata({
   const twitterImages = twitterImageUrl ? [twitterImageUrl] : undefined;
   return {
     title: s.title,
-    description: s.description,
+    description: s.description || "JBRSEO – وكالة سيو متخصصة تساعدك على الظهور الأول في نتائج البحث وتنمية أعمالك في السعودية ومصر.",
     alternates: {
       canonical,
       languages: { ar: canonical },

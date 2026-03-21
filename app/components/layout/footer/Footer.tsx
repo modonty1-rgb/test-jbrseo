@@ -98,7 +98,7 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
 
           {/* NAV COL */}
           <div>
-            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-white/60">
+            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-white/80">
               روابط سريعة
             </p>
             <ul className="flex flex-col gap-2.5">
@@ -118,7 +118,7 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
           {/* SOCIALS COL */}
           {socialLinks.length > 0 && (
           <div>
-            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-white/60">
+            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-white/80">
                 تابعنا
               </p>
               <div className="flex flex-wrap gap-2">
@@ -141,7 +141,7 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
 
         {/* ── BOTTOM ROW ── */}
         <div className="flex flex-col items-center justify-between gap-3 pt-6 sm:flex-row">
-          <p className="text-[12px] text-white/65">
+          <p className="text-[12px] text-white/80">
             {COPYRIGHT}
           </p>
           <nav className="flex gap-5">

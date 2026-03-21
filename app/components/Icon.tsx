@@ -33,6 +33,11 @@ const iconMap: Record<string, keyof typeof LucideIcons> = {
   "✅": "CheckCircle2",
   "✦": "Sparkles",
   "✓": "Check",
+  "🎨": "Palette",
+  "📱": "Smartphone",
+  "🎬": "Clapperboard",
+  "💻": "Laptop",
+  "💰": "Coins",
 };
 
 export function Icon({ emoji, label, className = "w-5 h-5 shrink-0 opacity-80" }: IconProps) {
