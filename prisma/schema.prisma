@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model SiteSettings {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  gtmId           String   @default("")
+  hotjarId        String   @default("")
+  fbPixelId       String   @default("")
+  whatsappNumber  String   @default("")
+  updatedAt       DateTime @default(now())
+}
+
+model Subscriber {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  contactName  String
+  email        String   @unique
+  phone        String
+  businessName String?
+  businessType String?
+  planName     String
+  planIndex    Int?
+  country      String
+  isAnnual     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@index([country])
+  @@index([createdAt])
+}
+
+model LandingSection {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  country   String
+  section   String
+  data      Json
+  updatedAt DateTime @updatedAt
+
+  @@unique([country, section])
+}
