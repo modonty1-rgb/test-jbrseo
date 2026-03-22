@@ -17,16 +17,25 @@ type HeroTrustBarProps = {
   hero?: StaticLanding["hero"];
 };
 
+function isSvgUrl(url: string): boolean {
+  return /\.svg(\?|#|$)/i.test(url);
+}
+
 function LogoItem({ client }: { client: TrustBarClient }) {
+  const unoptimized = isSvgUrl(client.logoUrl);
   const inner = (
     <span className="flex flex-col items-center gap-1">
-      <Image
-        src={client.logoUrl}
-        alt={client.name}
-        width={100}
-        height={32}
-        className="h-6 w-auto object-contain opacity-60 transition-opacity hover:opacity-90 sm:h-7"
-      />
+      <span className="relative block h-6 w-[100px] shrink-0 sm:h-7 sm:w-[120px]">
+        <Image
+          src={client.logoUrl}
+          alt={client.name}
+          fill
+          sizes="(max-width: 640px) 100px, 120px"
+          loading="eager"
+          unoptimized={unoptimized}
+          className="object-contain object-center opacity-60 transition-opacity hover:opacity-90"
+        />
+      </span>
       <span className="text-[10px] font-medium text-muted-foreground/60">{client.name}</span>
     </span>
   );
