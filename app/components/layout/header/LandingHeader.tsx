@@ -5,28 +5,32 @@ import type { LandingContent, SupportedCountry } from "@/lib/landing-content.typ
 import { getNavLinks } from "@/lib/site-links";
 import { HeaderLogo } from "@/app/components/layout/HeaderLogo";
 import { ThemeToggle } from "@/app/components/layout/header/ThemeToggle";
-import { HeaderMobileMenuLazy } from "@/app/components/layout/header/HeaderMobileMenuLazy";
 
 type NavLinkItem = { href: string; label: string };
+
+const LANDING_NAV_LINK_CLASS =
+  "relative inline-flex min-h-11 w-full items-center justify-center rounded-lg px-2 py-2 text-center text-xs font-semibold text-white/90 transition-colors duration-200 hover:bg-white/10 hover:text-white sm:min-h-0 sm:px-3 sm:text-sm lg:inline-flex lg:w-auto after:absolute after:bottom-1 after:start-2 after:end-2 after:h-[2px] after:rounded-full after:bg-accent after:scale-x-0 after:transition-transform after:duration-200 hover:after:scale-x-100 sm:after:start-3 sm:after:end-3";
 
 function DesktopNav({ navLinks }: { navLinks: NavLinkItem[] }) {
   return (
     <nav className="hidden items-center gap-1 lg:flex" aria-label="القائمة الرئيسية">
       {navLinks.map(({ href, label }) => (
-        <NextLink
-          key={href}
-          href={href}
-          className="
-            relative rounded-lg px-3 py-2
-            text-sm font-semibold text-white/90
-            transition-colors duration-200
-            hover:bg-white/10 hover:text-white
-            after:absolute after:bottom-1 after:start-3 after:end-3
-            after:h-[2px] after:rounded-full after:bg-accent
-            after:scale-x-0 after:transition-transform after:duration-200
-            hover:after:scale-x-100
-          "
-        >
+        <NextLink key={href} href={href} className={LANDING_NAV_LINK_CLASS}>
+          {label}
+        </NextLink>
+      ))}
+    </nav>
+  );
+}
+
+function MobileNavRow({ navLinks }: { navLinks: NavLinkItem[] }) {
+  return (
+    <nav
+      className="grid w-full grid-cols-3 gap-1 border-t border-white/8 px-3 pb-3 pt-2 lg:hidden"
+      aria-label="القائمة الرئيسية"
+    >
+      {navLinks.map(({ href, label }) => (
+        <NextLink key={href} href={href} className={LANDING_NAV_LINK_CLASS}>
           {label}
         </NextLink>
       ))}
@@ -90,7 +94,7 @@ export function LandingHeader({
             aria-hidden
           />
           <span>{headerBannerText}</span>
-          <span className="hidden sm:inline mx-1 opacity-40">·</span>
+          <span className="mx-1 hidden opacity-40 sm:inline">·</span>
           <Link
             href={pricingHref}
             className="
@@ -105,26 +109,21 @@ export function LandingHeader({
         </div>
       )}
 
-      <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-between border-b border-white/8 px-5 py-3 sm:px-8 lg:px-10">
-        <HeaderLogo logoHref={logoHref} />
-        <DesktopNav navLinks={navLinks} />
-        <div className="flex items-center gap-2.5">
-          <ThemeToggle />
-          <Link
-            href={pricingHref}
-            className="hidden sm:inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-sm font-black text-white shadow-[0_4px_16px_color-mix(in_oklch,var(--accent)_40%,transparent)] transition-all duration-200 hover:bg-accent/90 hover:scale-[1.03] sm:px-5"
-          >
-            {primaryCtaLabel}
-          </Link>
-          <div className="lg:hidden">
-            <HeaderMobileMenuLazy
-              navLinks={navLinks}
-              ctaLabel={primaryCtaLabel}
-              pricingHref={pricingHref}
-              bannerText={header.bannerText ?? ""}
-            />
+      <div className="mx-auto max-w-[1100px] border-b border-white/8">
+        <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-3 sm:px-8 lg:px-10">
+          <HeaderLogo logoHref={logoHref} />
+          <DesktopNav navLinks={navLinks} />
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <ThemeToggle />
+            <Link
+              href={pricingHref}
+              className="inline-flex max-w-[min(100%,11rem)] items-center justify-center truncate rounded-full bg-accent px-3 py-1.5 text-center text-[11px] font-black leading-tight text-white shadow-[0_4px_16px_color-mix(in_oklch,var(--accent)_40%,transparent)] transition-all duration-200 hover:bg-accent/90 hover:scale-[1.03] sm:max-w-none sm:px-5 sm:py-2 sm:text-sm"
+            >
+              {primaryCtaLabel}
+            </Link>
           </div>
         </div>
+        <MobileNavRow navLinks={navLinks} />
       </div>
 
       <style>{`
@@ -136,4 +135,3 @@ export function LandingHeader({
     </header>
   );
 }
-

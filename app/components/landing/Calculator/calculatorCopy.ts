@@ -25,13 +25,12 @@ export const CALCULATOR_WITH_CARD = {
 };
 
 export const CALCULATOR_SAVINGS_CARD = {
-  title: "حجم التوفير",
+  title: "حجم التوفير مع مدونتي",
+  differenceColumnTitle: "الفرق (التوفير)",
   monthly: "شهرياً",
   yearly: "سنوياً",
-  percentLabel: "نسبة التوفير مقارنةً بـ بدون مدونتي",
   primaryCta: "وفّر هذا الرقم ابتداءً من اليوم ←",
   secondaryCta: "شوف جزء مما ستحصل عليه مع مدونتي ←",
-  footnote: "أول ١٤ يوم مجاناً · بدون بطاقة بنكية · إلغاء في أي وقت",
 };
 
 export const CALCULATOR_SLIDER_LABELS = {
@@ -47,7 +46,7 @@ export const CALCULATOR_SET_TEAM_TEXT = "اضبط رواتب فريقك الحا
 
 export const CALCULATOR_FOOTER_BADGES = [
   "🔒 بياناتك ملكك دائماً",
-  "🇸🇦 دعم عربي ١٠٠٪",
+  "💬 دعم عربي ١٠٠٪",
   "↩️ ضمان ١٤ يوم",
   "⚡ نشر خلال ٧٢ ساعة",
 ] as const;

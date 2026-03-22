@@ -82,9 +82,13 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
               <HeaderLogo logoHref={homeHref} />
             </div>
 
-            <p className="mb-3 inline-flex items-center gap-1.5 text-sm font-bold tracking-wider text-emerald-400 before:content-[''] before:inline-block before:h-[1.5px] before:w-4 before:shrink-0 before:rounded-full before:bg-emerald-400">
-              {footer.tagline}
-            </p>
+            <div className="mb-3 flex max-w-[min(100%,22rem)] items-start gap-1.5">
+              <span
+                aria-hidden
+                className="mt-1.5 inline-block h-[1.5px] w-4 shrink-0 rounded-full bg-emerald-400 sm:mt-2"
+              />
+              <p className="text-balance text-sm font-bold tracking-wider text-emerald-400">{footer.tagline}</p>
+            </div>
 
             <p className="mb-5 max-w-[240px] text-sm leading-[1.75] text-white/75">
               {footer.desc}

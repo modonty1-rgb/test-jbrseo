@@ -18,6 +18,7 @@ const iconMap: Record<string, keyof typeof LucideIcons> = {
   "🔗": "Link2",
   "🔒": "Lock",
   "↩️": "RotateCcw",
+  "💬": "MessageCircle",
   "🇸🇦": "Globe2",
   "🇪🇬": "Globe2",
   "📤": "DatabaseBackup",

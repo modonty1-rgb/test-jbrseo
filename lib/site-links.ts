@@ -5,13 +5,13 @@ export type FooterLinkItem = { label: string; href: string };
 
 const NAV_SA: NavLinkItem[] = [
   { href: "/#outcomes", label: "النتائج" },
-  { href: "/#pricing", label: "الأسعار" },
+  { href: "/#how-it-works", label: "كيف نعمل" },
   { href: "/#faq", label: "الأسئلة" },
 ];
 
 const NAV_EG: NavLinkItem[] = [
   { href: "/#outcomes", label: "النتائج" },
-  { href: "/#pricing", label: "الأسعار" },
+  { href: "/#how-it-works", label: "كيف نعمل" },
   { href: "/#faq", label: "الأسئلة" },
 ];
 

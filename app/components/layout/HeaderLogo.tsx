@@ -17,7 +17,7 @@ export function HeaderLogo({ logoHref = "/#hero" }: HeaderLogoProps) {
           width={110}
           height={34}
           className="h-8 w-auto md:h-9"
-          priority
+          preload
         />
       </Link>
 

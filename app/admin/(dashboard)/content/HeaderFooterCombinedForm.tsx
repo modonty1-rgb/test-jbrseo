@@ -5,6 +5,7 @@ import type { SupportedCountry } from "@/lib/landing-content.types";
 import { updateHeaderFooterSections } from "@/app/actions/content-sections";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
+import { Textarea } from "@/app/components/ui/textarea";
 import { ConfirmSaveDialog } from "../components/ConfirmSaveDialog";
 
 type HeaderFooterCombinedFormProps = {
@@ -68,10 +69,11 @@ export function HeaderFooterCombinedForm({
         </h3>
         <label className="flex flex-col gap-1 text-xs font-semibold text-muted-foreground">
           الشعار (Tagline)
-          <Input
+          <Textarea
             name="tagline"
             defaultValue={footer.tagline}
-            className="rounded-md border border-border bg-background px-2 py-1 text-sm"
+            rows={3}
+            className="min-h-18 rounded-md border border-border bg-background px-2 py-2 text-sm"
           />
         </label>
         <label className="flex flex-col gap-1 text-xs font-semibold text-muted-foreground">

@@ -53,7 +53,7 @@ function SliderRow({
   const pct = ((value - min) / (max - min)) * 100;
 
   return (
-    <div className="mb-5">
+    <div className="mb-5 shrink-0 lg:mb-0">
       <div className="mb-2 flex items-center justify-between">
         <span className="inline-flex items-center gap-2 text-sm font-bold text-foreground">
           <span
@@ -63,7 +63,7 @@ function SliderRow({
           </span>
           {label}
         </span>
-        <span className="min-w-[110px] rounded-lg bg-accent/10 px-3 py-1 text-center text-sm font-black tabular-nums text-accent">
+        <span className="min-w-[110px] rounded-lg border border-border bg-muted px-3 py-1 text-center text-sm font-black tabular-nums text-foreground">
           {fmt(value)}
         </span>
       </div>
@@ -136,78 +136,78 @@ export default function Calculator({
         }}
       />
 
-      <div className="relative mx-auto max-w-[900px]">
+      <div className="relative mx-auto max-w-[1200px]">
         <IntroBlock pct={pct} />
 
-        <Card className="mb-5 rounded-3xl border border-border bg-card p-8 shadow-sm">
+        <Card className="mb-5 rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8">
           <p className="mb-6 text-[11px] font-extrabold uppercase tracking-widest text-muted-foreground/60">
             {CALCULATOR_SET_TEAM_TEXT}
           </p>
 
-          <SliderRow
-            icon="✍️"
-            label={CALCULATOR_SLIDER_LABELS.writer}
-            iconBgClass="bg-primary/5 text-primary"
-            value={writer}
-            min={2000}
-            max={12000}
-            step={500}
-            onChange={setWriter}
-          />
-          <SliderRow
-            icon="🎨"
-            label={CALCULATOR_SLIDER_LABELS.designer}
-            iconBgClass="bg-accent/5 text-accent"
-            value={designer}
-            min={2000}
-            max={15000}
-            step={500}
-            onChange={setDesigner}
-          />
-          <SliderRow
-            icon="📈"
-            label={CALCULATOR_SLIDER_LABELS.seo}
-            iconBgClass="bg-success/5 text-success"
-            value={seo}
-            min={2000}
-            max={15000}
-            step={500}
-            onChange={setSeo}
-          />
-          <SliderRow
-            icon="📱"
-            label={CALCULATOR_SLIDER_LABELS.social}
-            iconBgClass="bg-destructive/5 text-destructive"
-            value={social}
-            min={2000}
-            max={12000}
-            step={500}
-            onChange={setSocial}
-          />
-          <SliderRow
-            icon="🎬"
-            label={CALCULATOR_SLIDER_LABELS.video}
-            iconBgClass="bg-secondary/10 text-secondary-foreground"
-            value={video}
-            min={2000}
-            max={15000}
-            step={500}
-            onChange={setVideo}
-          />
-          <SliderRow
-            icon="💻"
-            label={CALCULATOR_SLIDER_LABELS.dev}
-            iconBgClass="bg-muted/40 text-foreground"
-            value={dev}
-            min={4000}
-            max={20000}
-            step={500}
-            onChange={setDev}
-          />
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_minmax(0,1fr)] lg:items-stretch lg:gap-5">
+            <div className="flex min-h-0 min-w-0 flex-col gap-4 lg:h-full lg:justify-between lg:gap-0">
+              <SliderRow
+                icon="✍️"
+                label={CALCULATOR_SLIDER_LABELS.writer}
+                iconBgClass="bg-primary/5 text-primary"
+                value={writer}
+                min={2000}
+                max={12000}
+                step={500}
+                onChange={setWriter}
+              />
+              <SliderRow
+                icon="🎨"
+                label={CALCULATOR_SLIDER_LABELS.designer}
+                iconBgClass="bg-accent/5 text-accent"
+                value={designer}
+                min={2000}
+                max={15000}
+                step={500}
+                onChange={setDesigner}
+              />
+              <SliderRow
+                icon="📈"
+                label={CALCULATOR_SLIDER_LABELS.seo}
+                iconBgClass="bg-success/5 text-success"
+                value={seo}
+                min={2000}
+                max={15000}
+                step={500}
+                onChange={setSeo}
+              />
+              <SliderRow
+                icon="📱"
+                label={CALCULATOR_SLIDER_LABELS.social}
+                iconBgClass="bg-destructive/5 text-destructive"
+                value={social}
+                min={2000}
+                max={12000}
+                step={500}
+                onChange={setSocial}
+              />
+              <SliderRow
+                icon="🎬"
+                label={CALCULATOR_SLIDER_LABELS.video}
+                iconBgClass="bg-secondary/10 text-secondary-foreground"
+                value={video}
+                min={2000}
+                max={15000}
+                step={500}
+                onChange={setVideo}
+              />
+              <SliderRow
+                icon="💻"
+                label={CALCULATOR_SLIDER_LABELS.dev}
+                iconBgClass="bg-muted/40 text-foreground"
+                value={dev}
+                min={4000}
+                max={20000}
+                step={500}
+                onChange={setDev}
+              />
+            </div>
 
-          <hr className="my-6 border-dashed border-border" />
-
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-2">
             <WithoutPlanCard
               badItems={badItems}
               totalM={totalM}
