@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import Script from "next/script";
-import { LandingHeader } from "@/app/components/layout/header/LandingHeader";
-import { Footer } from "@/app/components/layout/footer/Footer";
+import { FooterRouteGate } from "@/app/components/layout/footer/FooterRouteGate";
 import { ChatWidgetLazy } from "@/app/components/layout/ChatWidget/ChatWidgetLazy";
 import { getStaticLandingWithOverrides } from "@/app/content/landing/get-static-landing";
 import { getLandingContent } from "@/lib/getLandingContent";
@@ -82,15 +81,8 @@ async function CountryLayoutContent({
           fbq('init','${fbPixelId}');fbq('track','PageView');
         `}</Script>
       )}
-      <LandingHeader
-        content={content}
-        staticLanding={staticLanding}
-        country={countryCode}
-        basePath={basePath}
-        pricingHref={`${basePath}#pricing`}
-      />
-      <main id="main-content">{children}</main>
-      <Footer
+      {children}
+      <FooterRouteGate
         content={content}
         staticLanding={staticLanding}
         country={countryCode}

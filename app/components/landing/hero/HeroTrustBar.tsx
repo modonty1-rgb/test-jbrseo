@@ -32,10 +32,10 @@ function LogoItem({ client }: { client: TrustBarClient }) {
       <span className="relative flex h-7 w-[104px] items-center justify-center rounded-md bg-muted/15 sm:h-8 sm:w-[120px]">
         <Image
           src={client.logoUrl}
-          alt=""
+          alt="شريك موثوق"
           fill
           sizes="(max-width: 640px) 104px, 120px"
-          loading="eager"
+          loading="lazy"
           unoptimized={unoptimized}
           className="object-contain object-center opacity-60 transition-opacity hover:opacity-90"
         />

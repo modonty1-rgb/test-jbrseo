@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { getCountryFromHeaders } from "@/lib/getCountryFromHeaders";
 import { getStaticLandingWithOverrides } from "@/app/content/landing/get-static-landing";
+import Link from "@/app/components/link";
 import { StaffAvatar } from "@/app/components/StaffAvatar";
 import { Card } from "@/app/components/ui/card";
 
@@ -32,8 +33,7 @@ export default async function TeamPage() {
           الأشخاص الذين يعملون معك في كواليس النمو بالمحتوى والـ SEO
         </h1>
         <p className="mx-auto max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          نؤمن أن النتائج الممتازة تبدأ بفريق صغير متخصص ومتفاهم. هذه الصفحة تعطيك صورة أوضح عن الأدوار الأساسية
-          داخل JBRSEO. الأسماء والوظائف هنا نموذجية ويمكنك تخصيصها بحسب فريقك الفعلي لاحقاً.
+          لما تشترك في JBRSEO، هؤلاء هم الأشخاص الذين يشتغلون على نشاطك — كل واحد متخصص في دوره، وكلهم يشتغلون معاً عشانك.
         </p>
       </section>
 
@@ -44,7 +44,7 @@ export default async function TeamPage() {
               key={`core-${i}-${member.name}`}
               className="flex flex-col overflow-hidden rounded-2xl border-border/60 bg-card/40 p-0 text-sm shadow-sm"
             >
-              <div className="aspect-square w-full max-w-[14rem] shrink-0 sm:max-w-[16rem]">
+              <div className="aspect-square w-full shrink-0">
                 <StaffAvatar
                   avatarUrl={member.avatarUrl}
                   avatarColor={member.avatarColor}
@@ -71,7 +71,7 @@ export default async function TeamPage() {
               key={`exec-${i}-${member.name}`}
               className="flex flex-col overflow-hidden rounded-2xl border-border/60 bg-card/40 p-0 text-sm shadow-sm"
             >
-              <div className="aspect-square w-full max-w-[14rem] shrink-0 sm:max-w-[16rem]">
+              <div className="aspect-square w-full shrink-0">
                 <StaffAvatar
                   avatarUrl={member.avatarUrl}
                   avatarColor={member.avatarColor}
@@ -90,6 +90,18 @@ export default async function TeamPage() {
           ))}
         </div>
       </section>
+
+      <div className="mt-16 flex flex-col items-center gap-4 text-center">
+        <p className="text-muted-foreground text-sm">
+          مستعد تبدأ مع فريق يشتغل معك؟
+        </p>
+        <Link
+          href="/sa/signup"
+          className="rounded-xl bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+        >
+          ابدأ معنا الآن
+        </Link>
+      </div>
     </div>
   );
 }

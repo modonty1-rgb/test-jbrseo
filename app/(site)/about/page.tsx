@@ -77,8 +77,7 @@ export default async function AboutPage() {
       <section className="space-y-4">
         <h2 className="text-base font-semibold text-foreground">الفريق وراء JBRSEO</h2>
         <p className="text-xs leading-relaxed text-muted-foreground">
-          فريق صغير لكن مركز، يجمع بين خبرة عملية في المتاجر الإلكترونية، وعمق في SEO والمحتوى. الأسماء هنا
-          توضيحية ويمكنك تحديثها حسب فريقك الفعلي.
+          فريق صغير لكن مركز — كل شخص فيه متخصص في دوره، ويشتغلون معاً على نشاطك من أول يوم.
         </p>
         <div className="grid gap-4 sm:grid-cols-3">
           {teamPreview.map((member, i) => (
@@ -86,7 +85,7 @@ export default async function AboutPage() {
               key={`${i}-${member.name}`}
               className="flex flex-col overflow-hidden rounded-2xl border-border/60 bg-card/40 p-0 text-sm shadow-sm"
             >
-              <div className="aspect-square w-full max-w-[14rem] shrink-0 sm:max-w-[16rem]">
+              <div className="aspect-square w-full shrink-0">
                 <StaffAvatar
                   avatarUrl={member.avatarUrl}
                   avatarColor={member.avatarColor}

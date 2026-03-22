@@ -2,6 +2,7 @@ import type { PricingContent } from "@/app/content/landing/price-section-types";
 import type { StaticLanding } from "@/app/content/landing/types";
 import type { SupportedCountry } from "@/lib/landing-content.types";
 import { getWhatsAppLink } from "@/lib/site-links";
+import { buildSignupHrefWithPlanId } from "@/lib/signup-href";
 import { PricingBillingSection } from "@/app/components/pricing/PricingBillingSection";
 import { PricingFaqExcerpt } from "@/app/components/pricing/PricingFaqExcerpt";
 import { Card } from "@/app/components/ui/card";
@@ -29,7 +30,13 @@ export function PricingPageShell({
   const currency = country === "EG" ? "ج.م" : "ر.س";
   const featuredPlan =
     PLANS.find((p) => p.featured) ?? PLANS[1] ?? PLANS[0];
-  const primaryHref = `${signupHrefBase}?plan=${featuredPlan.id}`;
+  const primaryHref = buildSignupHrefWithPlanId(
+    signupHrefBase,
+    featuredPlan.id,
+    true,
+    featuredPlan.price.mo,
+    featuredPlan.price.yr
+  );
   const secondaryHref = whatsappHref ?? getWhatsAppLink(country);
   const safeHighlight =
     highlightPlanId && PLANS.some((p) => p.id === highlightPlanId)
@@ -37,7 +44,7 @@ export function PricingPageShell({
       : null;
 
   return (
-    <main className="bg-background text-foreground">
+    <div className="bg-background text-foreground">
       <section className="border-b border-border bg-card/60">
         <div className="mx-auto flex max-w-4xl flex-col items-center px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
           <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">
@@ -128,6 +135,6 @@ export function PricingPageShell({
 
         <PricingFaqExcerpt faq={faq} />
       </section>
-    </main>
+    </div>
   );
 }

@@ -1,5 +1,4 @@
 import type { LandingContent } from "@/lib/landing-content.types";
-import { cl } from "@/helpers/cloudinary";
 
 function buildJsonLd(content: LandingContent) {
   const { seo, landing } = content;
@@ -8,9 +7,8 @@ function buildJsonLd(content: LandingContent) {
   const pageUrl = seo.canonical?.trim() || fallbackOrigin;
   const orgId = `${pageUrl.replace(/\/$/, "")}#organization`;
 
-  const logoUrl = content.landingImages.logoWhite || cl(
-    "https://res.cloudinary.com/dfegnpgwx/image/upload/v1771973886/jbrser_svg_ikxmnn.svg"
-  );
+  const organizationLogoUrl =
+    "https://res.cloudinary.com/dfegnpgwx/image/upload/f_auto,q_auto,fl_immutable_cache/v1771971820/jbrSeo_coverPage_du6vsm.png";
   const socialUrls = [
     process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK_URL,
     process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM_URL,
@@ -25,16 +23,24 @@ function buildJsonLd(content: LandingContent) {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": orgId,
-    name: "JBRSEO",
+    name: "مدونتي — JBRSEO",
     url: pageUrl,
-    logo: { "@type": "ImageObject", url: logoUrl },
+    logo: { "@type": "ImageObject", url: organizationLogoUrl },
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      availableLanguage: "Arabic",
+    },
     ...(socialUrls.length > 0 && { sameAs: socialUrls }),
   };
+  const webSiteDescription =
+    seo.description?.trim() ||
+    "منصة المحتوى العربي للشركات السعودية والمصرية — مقالات تجلب عملاء بدون إعلانات.";
   const webSite = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "JBRSEO",
-    description: seo.description,
+    description: webSiteDescription,
     url: pageUrl,
     inLanguage: "ar",
     publisher: { "@id": orgId },

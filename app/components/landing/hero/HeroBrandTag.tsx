@@ -42,11 +42,11 @@ export function HeroBrandTag(): ReactElement {
         <div className="hv-orb">
           <Image
             src={heroOrbLogo}
-            alt=""
+            alt="لوحة تحكم مدونتي"
             width={92}
             height={92}
             sizes="92px"
-            preload
+            loading="lazy"
             unoptimized
             className="h-[92px] w-[92px] object-contain object-center"
           />

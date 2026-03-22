@@ -1,45 +1,57 @@
+"use client";
+
+import { useEffect, type ReactElement } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Link from "@/app/components/link";
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
-import type { Metadata } from "next";
 import {
+  getCountryCodeFromSlug,
   isSupportedCountrySlug,
 } from "@/lib/country-config";
+import { getWhatsAppLink } from "@/lib/site-links";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ country: string }>;
-}): Promise<Metadata> {
-  const { country: raw } = await params;
-  const slug = raw?.toLowerCase();
-  if (!isSupportedCountrySlug(slug)) {
-    return { title: "شكراً — JBRSEO" };
+export default function CountrySignupThankYouPage(): ReactElement | null {
+  const router = useRouter();
+  const params = useParams();
+  const searchParams = useSearchParams();
+
+  let raw: string | undefined;
+  const countryParam = params.country;
+  if (typeof countryParam === "string") {
+    raw = countryParam;
+  } else if (Array.isArray(countryParam) && countryParam[0] !== undefined) {
+    raw = countryParam[0];
   }
-  return {
-    title: "شكراً لتسجيلك",
-    description: "استلمنا بياناتك وسنتواصل معك قريباً.",
-    robots: { index: false, follow: false },
-  };
-}
-
-export default async function CountrySignupThankYouPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ country: string }>;
-  searchParams: Promise<{ country?: string }>;
-}) {
-  const { country: raw } = await params;
   const slug = raw?.toLowerCase();
-  if (!isSupportedCountrySlug(slug)) {
+  const countrySlug = isSupportedCountrySlug(slug) ? slug : null;
+
+  const preview = searchParams.get("country")?.toLowerCase();
+  const previewQuery =
+    preview === "sa" || preview === "eg" ? `?country=${preview}` : "";
+  const homeHref = countrySlug ? `/${countrySlug}${previewQuery}` : "/";
+  const waHref = countrySlug
+    ? getWhatsAppLink(getCountryCodeFromSlug(countrySlug))
+    : "";
+
+  useEffect(() => {
+    if (!countrySlug) return;
+    const submitted = sessionStorage.getItem("jbrseo_signup_submitted");
+    if (!submitted) {
+      router.replace(`/${countrySlug}/signup${previewQuery}`);
+      return;
+    }
+    const clearKey = window.setTimeout(() => {
+      sessionStorage.removeItem("jbrseo_signup_submitted");
+    }, 100);
+    return () => {
+      window.clearTimeout(clearKey);
+    };
+  }, [router, countrySlug, previewQuery]);
+
+  if (!countrySlug) {
     return null;
   }
-  const countrySlug = slug as "sa" | "eg";
-  const sp = await searchParams;
-  const preview = sp?.country?.toLowerCase();
-  const previewQuery = preview === "sa" || preview === "eg" ? `?country=${preview}` : "";
-  const homeHref = `/${countrySlug}${previewQuery}`;
 
   return (
     <div className="relative min-h-[80vh] overflow-hidden px-4 py-20 flex justify-center items-center landing-grain">
@@ -80,10 +92,10 @@ export default async function CountrySignupThankYouPage({
             تم الاستلام بنجاح
           </p>
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-            شكراً لتسجيلك!
+            وصلنا طلبك — يلا نبدأ
           </h1>
           <p className="text-base text-muted-foreground leading-relaxed max-w-md mx-auto">
-            استلمنا بياناتك وسيراجعها الفريق ثم يتواصل معك خلال أوقات العمل.
+            استلمنا بياناتك وسيتواصل معك فريقنا خلال ٢٤ ساعة.
           </p>
         </div>
 
@@ -94,7 +106,7 @@ export default async function CountrySignupThankYouPage({
           <CardContent className="space-y-2.5 pt-0">
             {[
               "نراجع طلبك ونطابقه مع الخطة التي اخترتها",
-              "سيتواصل معك فريقنا خلال 24 ساعة عمل عند الحاجة",
+              "سيتواصل معك فريقنا خلال ٢٤ ساعة لتفعيل خطتك",
             ].map((step, i) => (
               <div key={i} className="flex items-start gap-3 text-sm text-foreground/80">
                 <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/20 text-[11px] font-bold text-accent">
@@ -106,7 +118,44 @@ export default async function CountrySignupThankYouPage({
           </CardContent>
         </Card>
 
-        <div className="flex justify-center">
+        {/* TODO: Remove after payment gateway setup */}
+        <div className="mt-6 rounded-2xl border border-border/60 bg-muted/20 p-6 text-right">
+          <p className="mb-4 text-sm font-medium text-muted-foreground">
+            لتفعيل اشتراكك، أرسل المبلغ المحدد على الحساب التالي:
+          </p>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-foreground font-medium">SA3100000000300001687908</span>
+              <span className="text-muted-foreground">رقم IBAN</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-foreground font-medium">00300001687908</span>
+              <span className="text-muted-foreground">رقم الحساب</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-foreground font-medium">شركة جبر سيو</span>
+              <span className="text-muted-foreground">اسم الحساب</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-foreground font-medium">البنك الأهلي السعودي</span>
+              <span className="text-muted-foreground">البنك</span>
+            </div>
+          </div>
+          <p className="mt-4 text-xs text-muted-foreground">
+            بعد التحويل، أرسل صورة الإيصال على واتساب وسنفعّل حسابك خلال ساعات العمل.
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center gap-3">
+          <Button
+            asChild
+            size="lg"
+            className="rounded-full px-8 font-semibold shadow-lg shadow-primary/20 hover:scale-105 transition-transform duration-200"
+          >
+            <Link href={waHref} target="_blank" rel="noopener noreferrer">
+              تواصل معنا على واتساب
+            </Link>
+          </Button>
           <Button
             asChild
             size="lg"

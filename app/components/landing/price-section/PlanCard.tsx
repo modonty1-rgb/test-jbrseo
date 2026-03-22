@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "@/app/components/link";
 import type { Plan, PricingUI } from "@/app/content/landing/price-section-types";
 import { applyPricingUiPlaceholders } from "@/lib/pricing-ui-placeholders";
+import { buildSignupHrefWithPlan } from "@/lib/signup-href";
 import { Icon } from "@/app/components/Icon";
 import { Button } from "@/app/components/ui/button";
 import { Card } from "@/app/components/ui/card";
@@ -18,11 +19,6 @@ interface PlanCardProps {
   signupHrefBase?: string;
   whatsappLink?: string;
   className?: string;
-}
-
-function signupHrefWithPlan(signupHrefBase: string, planIndex: number, annual: boolean): string {
-  const sep = signupHrefBase.includes("?") ? "&" : "?";
-  return `${signupHrefBase}${sep}plan=${planIndex}&billing=${annual ? "annual" : "monthly"}`;
 }
 
 /** Full primary styles only for `featured`; others use outline so one strong CTA per pricing grid. */
@@ -60,7 +56,7 @@ export function PlanCard({
   const perMonthOver18 = annualTotal > 0 ? Math.round(annualTotal / 18) : 0;
   const F = plan.featured;
 
-  const signupHref = signupHrefWithPlan(signupHrefBase, planIndex, annual);
+  const signupHref = buildSignupHrefWithPlan(signupHrefBase, planIndex, annual, mo, plan.price.yr);
   const ctaCls = ctaClassName(plan, F);
   const ctaStyle =
     F && plan.ctaClass === "btn-gold" ? { background: "var(--pricing-badge-gold)" } : undefined;
