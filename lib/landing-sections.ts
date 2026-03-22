@@ -3,6 +3,7 @@ import "server-only";
 import type { SupportedCountry } from "./landing-content.types";
 import type { StaticLanding } from "@/app/content/landing/types";
 import type { Prisma } from "@prisma/client";
+import { optimizeCloudinaryStringsInJson } from "@/helpers/cloudinary";
 import { prisma } from "./prisma";
 
 const SECTION_KEYS = [
@@ -49,10 +50,11 @@ export async function upsertLandingSection<T extends Prisma.InputJsonValue>(
   section: LandingSectionKey,
   data: T,
 ): Promise<void> {
+  const optimized = optimizeCloudinaryStringsInJson(data) as T;
   await prisma.landingSection.upsert({
     where: { country_section: { country, section } },
-    create: { country, section, data },
-    update: { data },
+    create: { country, section, data: optimized },
+    update: { data: optimized },
   });
 }
 
