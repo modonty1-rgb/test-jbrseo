@@ -6,7 +6,7 @@ import { HeroBackground } from "./HeroBackground";
 import { HeroBenefits } from "./HeroBenefits";
 import { HeroCTASection } from "./HeroCTASection";
 import { HeroEyebrow } from "./HeroEyebrow";
-import { HeroBrandTag } from "./HeroBrandTag";
+// import { HeroBrandTag } from "./HeroBrandTag";
 import { HeroHeadline } from "./HeroHeadline";
 import { HeroSlogan } from "./HeroSlogan";
 
@@ -46,14 +46,14 @@ export default function Hero({
       <div className="relative z-10 mx-auto w-full max-w-6xl">
         <div className="hero-content-reveal w-full">
           <HeroEyebrow proof={h.proof} />
-          <div className="mt-2 grid w-full grid-cols-1 gap-8 lg:mt-0 lg:grid-cols-2 lg:items-center lg:gap-12">
+          <div className="mt-2 grid w-full grid-cols-1 gap-8 lg:mt-0 lg:grid-cols-1 lg:items-center lg:gap-12">
             <div className="flex w-full flex-col items-center gap-4 lg:items-start lg:gap-5">
               <HeroHeadline line1={h.h1Line1} line2={h.h1Line2} />
               <HeroSlogan tagline={staticLanding.footer.tagline} />
             </div>
-            <div className="flex w-full justify-center">
+            {/* <div className="flex w-full justify-center">
               <HeroBrandTag />
-            </div>
+            </div> */}
           </div>
           <p className="landing-hero-sub landing-reveal-content mx-auto mt-8 mb-8 max-w-[490px] text-base font-normal leading-[1.85] text-muted-foreground sm:text-[17.5px] lg:mt-10">
             {h.sub}

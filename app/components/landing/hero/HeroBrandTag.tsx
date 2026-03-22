@@ -38,7 +38,7 @@ export function HeroBrandTag(): ReactElement {
         <div className="hv-ring hv-ring-outer" />
         <div className="hv-ring hv-ring-inner" />
 
-        {/* <div className="hv-orb">
+        <div className="hv-orb">
           <Image
             src={heroOrbLogo}
             alt=""
@@ -49,7 +49,7 @@ export function HeroBrandTag(): ReactElement {
             unoptimized
             className="h-[92px] w-[92px] object-contain object-center"
           />
-        </div> */}
+        </div>
 
         <div className="hv-bars">
           <Bar height={19} />
