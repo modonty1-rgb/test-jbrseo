@@ -16,7 +16,7 @@ export function HeaderLogo({ logoHref = "/#hero" }: HeaderLogoProps) {
           alt="JBRSEO"
           width={110}
           height={34}
-          className="h-8 w-auto md:h-9"
+          className="h-8 w-[104px] object-contain md:h-9 md:w-[116px]"
           preload
         />
       </Link>
@@ -35,7 +35,7 @@ export function HeaderLogo({ logoHref = "/#hero" }: HeaderLogoProps) {
           alt="مدونتي"
           width={90}
           height={28}
-          className="h-6 w-auto md:h-7"
+          className="h-6 w-[77px] object-contain md:h-7 md:w-[90px]"
         />
       </Link>
     </div>

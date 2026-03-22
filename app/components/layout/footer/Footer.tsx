@@ -117,7 +117,7 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
                 alt="مدونتي"
                 width={72}
                 height={22}
-                className="h-5 w-auto brightness-0 invert"
+                className="h-5 w-[65px] object-contain brightness-0 invert"
               />
             </Link>
           </div>
