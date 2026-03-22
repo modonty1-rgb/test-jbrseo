@@ -35,14 +35,29 @@ export const STATIC_ONLY_KEYS: readonly StaticSectionKey[] = SECTION_KEYS.filter
   (k): k is StaticSectionKey => !SETTINGS_ONLY_KEYS.includes(k as (typeof SETTINGS_ONLY_KEYS)[number]),
 );
 
+let landingDbUnavailableLogged = false;
+
 export async function getLandingSectionOverride(
   country: SupportedCountry,
   section: LandingSectionKey,
 ): Promise<unknown | null> {
-  const row = await prisma.landingSection.findUnique({
-    where: { country_section: { country, section } },
-  });
-  return row ? (row.data as unknown) : null;
+  try {
+    const row = await prisma.landingSection.findUnique({
+      where: { country_section: { country, section } },
+    });
+    return row ? (row.data as unknown) : null;
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      throw error;
+    }
+    if (!landingDbUnavailableLogged) {
+      landingDbUnavailableLogged = true;
+      console.warn(
+        "[landing-sections] Database unreachable (timeout / Atlas). Using static landing until the connection works.",
+      );
+    }
+    return null;
+  }
 }
 
 export async function upsertLandingSection<T extends Prisma.InputJsonValue>(

@@ -9,6 +9,16 @@ import { prisma } from "./prisma";
 import { staticPlansToPricingPlans } from "./static-plans-to-content";
 import { getLandingSectionOverride } from "./landing-sections";
 
+async function siteSettingsRowSafe(): Promise<Awaited<ReturnType<typeof prisma.siteSettings.findFirst>>> {
+  try {
+    return await prisma.siteSettings.findFirst();
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") throw error;
+    console.warn("[getLandingContent] siteSettings unreachable; using empty tracking.");
+    return null;
+  }
+}
+
 function mergeLandingSeo(
   base: LandingContent["seo"],
   override: unknown,
@@ -86,7 +96,7 @@ async function fetchLandingContent(country: SupportedCountry, industry?: string)
   const base = await getStaticFallback();
   const [staticLandingRaw, settingsRow, seoOverride, ctaLabelOverride, pricingTeaserOverride] = await Promise.all([
     getStaticLandingWithOverrides(country),
-    prisma.siteSettings.findFirst(),
+    siteSettingsRowSafe(),
     getLandingSectionOverride(country, "seo"),
     getLandingSectionOverride(country, "ctaLabel"),
     getLandingSectionOverride(country, "pricingTeaser"),

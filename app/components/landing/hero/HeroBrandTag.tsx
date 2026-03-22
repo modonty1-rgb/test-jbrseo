@@ -27,11 +27,12 @@ export function HeroBrandTag(): ReactElement {
   return (
     <div className="hv-stage mx-auto w-full max-w-[420px]" aria-hidden>
       <div className="hv-btag">
-        <span className="hv-btag-dot" />
-        <span className="hv-btag-prefix">محتواك يُصنَّف — عملاؤك يصلون</span>
-        <span className="hv-btag-sep" />
-        <span className="hv-btag-badge">١٠٠٪</span>
-        <span className="hv-btag-suffix">منصة سعودية</span>
+        <div className="hv-btag-top">
+          <span className="hv-btag-dot" />
+          <span className="hv-btag-prefix">مدونتي — أقوى موظف مبيعات عندك</span>
+          
+        </div>
+        <p className="hv-btag-title">منصة سعودية تصنع الفرق</p>
       </div>
 
       <div className="hv-vis mx-auto">
@@ -128,7 +129,7 @@ const CSS = `
   position: relative;
   overflow: hidden;
   box-shadow: 0 0 0 .5px rgba(255,255,255,.07), 0 24px 56px rgba(0,0,0,.65);
-  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-family: var(--font-tajawal, "Tajawal"), sans-serif;
 }
 .hv-stage::before {
   content: '';
@@ -141,15 +142,23 @@ const CSS = `
 }
 
 .hv-btag {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
   background: rgba(255,255,255,.05);
   border: .5px solid rgba(255,255,255,.10);
-  border-radius: 99px;
-  padding: 5px 12px 5px 8px;
+  border-radius: 18px;
+  padding: 12px 16px 14px;
   margin-bottom: 18px;
   direction: rtl;
+}
+.hv-btag-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 7px;
 }
 .hv-btag-dot {
   width: 6px; height: 6px; border-radius: 50%;
@@ -158,14 +167,21 @@ const CSS = `
   flex-shrink: 0;
   display: block;
 }
-.hv-btag-prefix { font-size: 11.5px; font-weight: 700; color: #f0ece0; }
-.hv-btag-sep    { width: .5px; height: 12px; background: rgba(255,255,255,.15); flex-shrink: 0; display: block; }
-.hv-btag-badge  { font-size: 10.5px; font-weight: 900; color: #051a0e; background: #2ecc8f; border-radius: 99px; padding: 2px 8px; }
-.hv-btag-suffix {
-  font-size: 11.5px; font-weight: 900;
-  background: linear-gradient(to left, #d4a853, #2ecc8f);
+.hv-btag-prefix { font-size: 12px; font-weight: 700; color: #f0ece0; letter-spacing: .01em; }
+.hv-btag-sep    { width: .5px; height: 13px; background: rgba(255,255,255,.15); flex-shrink: 0; display: block; }
+.hv-btag-badge  { font-size: 11px; font-weight: 900; color: #051a0e; background: #2ecc8f; border-radius: 99px; padding: 3px 9px; }
+.hv-btag-title {
+  margin: 0;
+  font-size: clamp(15px, 4.2vw, 18px);
+  font-weight: 900;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-wrap: balance;
+  background: linear-gradient(to left, #f0ece0 0%, #d4a853 45%, #2ecc8f 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hv-vis { width: 230px; height: 275px; flex-shrink: 0; position: relative; }
