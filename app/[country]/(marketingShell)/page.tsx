@@ -37,6 +37,9 @@ const FinalCTA = dynamic<{ staticLanding: StaticLanding; country: import("@/lib/
   { loading: sectionFallback }
 );
 
+const HOME_SA_DESCRIPTION =
+  "مدونتي — منصة المحتوى العربي. مقالات تتصدر جوجل، صفحة شركتك في الشبكة، وقاعدة Leads مصنّفة — بدون كتابة حرف واحد.";
+
 export async function generateMetadata({
   params,
 }: {
@@ -55,12 +58,25 @@ export async function generateMetadata({
   const siteBase = resolveSiteOriginFromSeoCanonical(s.canonical, envSiteBase);
   const fallbackCanonical = `${siteBase}/${slug}`;
   const canonical = resolveCanonicalForMetadata(s.canonical, fallbackCanonical);
-  return buildLandingOgMetadata({
+  const baseMeta = buildLandingOgMetadata({
     seo: s,
     canonical,
     siteBase,
     documentTitle: s.title,
   });
+  if (slug !== "sa") {
+    return baseMeta;
+  }
+  return {
+    ...baseMeta,
+    description: HOME_SA_DESCRIPTION,
+    openGraph: baseMeta.openGraph
+      ? { ...baseMeta.openGraph, description: HOME_SA_DESCRIPTION }
+      : baseMeta.openGraph,
+    twitter: baseMeta.twitter
+      ? { ...baseMeta.twitter, description: HOME_SA_DESCRIPTION }
+      : baseMeta.twitter,
+  };
 }
 
 export const revalidate = 60;

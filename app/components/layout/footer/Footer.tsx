@@ -12,12 +12,7 @@ import type { SupportedCountry } from "@/lib/landing-content.types";
 import { getFooterLinks, getWhatsAppLink, LEGAL_LINKS } from "@/lib/site-links";
 import Image from "next/image";
 import { HeaderLogo } from "@/app/components/layout/HeaderLogo";
-
-const MODONTY_LOGO_URL =
-  "https://res.cloudinary.com/dfegnpgwx/image/upload/v1769683590/modontyLogo_ftf4yf.png";
-import { APP_VERSION } from "@/lib/app-version";
-
-const BRAND_NAME = "JBRSEO";
+import { MODONTY_LOGO_URL } from "@/lib/constants";
 const COPYRIGHT = "© جميع الحقوق محفوظة — JBRSEO";
 const WA_LABEL = "تواصل على واتساب";
 
@@ -50,26 +45,25 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
     { href: process.env.NEXT_PUBLIC_SOCIAL_SNAPCHAT_URL,  label: "Snapchat",    Icon: RoundSnapchat         },
   ].filter((item) => item.href);
 
-  const headerBg = "oklch(0.12 0.14 275)";
   return (
     <footer
       role="contentinfo"
-      className="relative overflow-hidden border-t border-white/10 text-white"
-      style={{ fontFamily: "'Tajawal', sans-serif", background: headerBg }}
+      className="relative overflow-hidden border-t border-border bg-muted text-foreground"
+      style={{ fontFamily: "'Tajawal', sans-serif" }}
     >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[.06]"
         style={{
           backgroundImage:
-            "linear-gradient(to left, transparent, color-mix(in oklab, white 15%, transparent), transparent), linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px)",
+            "linear-gradient(to left, transparent, color-mix(in oklch, var(--foreground) 12%, transparent), transparent), linear-gradient(color-mix(in oklch, var(--foreground) 10%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in oklch, var(--foreground) 10%, transparent) 1px, transparent 1px)",
           backgroundSize: "100% 1px, 48px 48px, 48px 48px",
           backgroundRepeat: "no-repeat, repeat, repeat",
         }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-20 left-1/2 h-[200px] w-[600px] -translate-x-1/2 rounded-full bg-white/5 blur-[80px]"
+        className="pointer-events-none absolute -bottom-20 left-1/2 h-[200px] w-[600px] -translate-x-1/2 rounded-full bg-foreground/5 blur-[80px]"
       />
       <div className="relative z-10 mx-auto max-w-[1100px] px-5 pt-14 pb-10 sm:px-8 lg:px-10">
 
@@ -104,6 +98,13 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
               {WA_LABEL}
             </Link>
 
+            <a
+              href="mailto:support@jbrseo.com"
+              className="mt-3 block text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              support@jbrseo.com
+            </a>
+
             <Link
               href="https://modonty.com"
               target="_blank"
@@ -111,20 +112,20 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
               className="mt-5 inline-flex items-center gap-2 opacity-50 transition-opacity hover:opacity-80"
               aria-label="مدعوم بـ مدونتي"
             >
-              <span className="text-xs text-white/60">مدعوم بـ</span>
+              <span className="text-xs text-muted-foreground">مدعوم بـ</span>
               <Image
                 src={MODONTY_LOGO_URL}
                 alt="مدونتي"
                 width={72}
                 height={22}
-                className="h-5 w-[65px] object-contain brightness-0 invert"
+                className="h-5 w-[65px] object-contain dark:brightness-0 dark:invert"
               />
             </Link>
           </div>
 
           {/* NAV COL */}
           <div>
-            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-white/80">
+            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
               روابط سريعة
             </p>
             <ul className="flex flex-col gap-2.5">
@@ -132,7 +133,7 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
                 <li key={i}>
                   <Link
                     href={l.href}
-                    className="group flex items-center gap-1.5 text-sm font-semibold text-white/75 transition-colors duration-200 hover:text-white before:content-[''] before:inline-block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-transparent before:transition-colors group-hover:before:bg-emerald-400"
+                    className="group flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors duration-200 hover:text-foreground before:content-[''] before:inline-block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-transparent before:transition-colors group-hover:before:bg-emerald-400"
                   >
                     {l.label}
                   </Link>
@@ -144,7 +145,7 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
           {/* SOCIALS COL */}
           {socialLinks.length > 0 && (
           <div>
-            <p className="mb-4 text-sm font-black uppercase tracking-widest text-white/80">
+            <p className="mb-4 text-sm font-black uppercase tracking-widest text-muted-foreground">
                 تابعنا
               </p>
               <div className="flex flex-wrap gap-2">
@@ -155,7 +156,7 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
                     aria-label={label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] border border-white/20 bg-white/5 text-white/70 transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/15 hover:border-white/30 hover:text-white"
+                    className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] border border-border/60 bg-foreground/5 text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-border hover:bg-foreground/10 hover:text-foreground"
                   >
                     <Icon className="h-[15px] w-[15px]" />
                   </Link>
@@ -167,19 +168,13 @@ export function Footer({ content, staticLanding, country, basePath }: FooterProp
 
         {/* ── BOTTOM ROW ── */}
         <div className="flex flex-col items-center justify-between gap-3 pt-6 sm:flex-row">
-          <p className="text-sm text-white/80">
-            {COPYRIGHT}
-            <span className="text-white/45" translate="no">
-              {" "}
-              · v{APP_VERSION}
-            </span>
-          </p>
+          <p className="text-sm text-muted-foreground">{COPYRIGHT}</p>
           <nav className="flex gap-5">
             {LEGAL_LINKS.map((l, i) => (
               <Link
                 key={i}
                 href={l.href}
-                className="text-sm text-white/65 transition-colors duration-200 hover:text-white"
+                className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
               >
                 {l.label}
               </Link>

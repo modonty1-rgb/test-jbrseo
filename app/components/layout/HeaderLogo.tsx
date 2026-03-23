@@ -1,15 +1,13 @@
+import type { ReactElement } from "react";
 import Image from "next/image";
 import Link from "@/app/components/link";
 import { SITE_LOGO_URL } from "@/lib/constants";
 
-const MODONTY_LOGO_URL =
-  "https://res.cloudinary.com/dfegnpgwx/image/upload/v1769683590/modontyLogo_ftf4yf.png";
-
 type HeaderLogoProps = { logoHref?: string };
 
-export function HeaderLogo({ logoHref = "/#hero" }: HeaderLogoProps) {
+export function HeaderLogo({ logoHref = "/#hero" }: HeaderLogoProps): ReactElement {
   return (
-    <div className="flex shrink-0 items-center gap-3">
+    <div className="flex shrink-0 flex-col items-start gap-0.5">
       <Link href={logoHref} aria-label="الرئيسية">
         <Image
           src={SITE_LOGO_URL}
@@ -20,23 +18,13 @@ export function HeaderLogo({ logoHref = "/#hero" }: HeaderLogoProps) {
           preload
         />
       </Link>
-
-      <span className="h-5 w-px bg-white/20" aria-hidden />
-
       <Link
         href="https://modonty.com"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="مدونتي"
-        className="opacity-60 transition-opacity hover:opacity-90"
+        className="hidden text-[10px] text-muted-foreground transition-colors hover:text-foreground sm:inline-block"
       >
-        <Image
-          src={MODONTY_LOGO_URL}
-          alt="مدونتي"
-          width={90}
-          height={28}
-          className="h-6 w-[77px] object-contain md:h-7 md:w-[90px]"
-        />
+        مدعوم بـ modonty
       </Link>
     </div>
   );

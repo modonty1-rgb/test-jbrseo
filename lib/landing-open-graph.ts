@@ -3,7 +3,7 @@ import type { LandingContent } from "@/lib/landing-content.types";
 import { DEFAULT_OG_IMAGE_URL } from "@/lib/constants";
 
 const DEFAULT_DESCRIPTION =
-  "JBRSEO – وكالة سيو متخصصة تساعدك على الظهور الأول في نتائج البحث وتنمية أعمالك في السعودية ومصر.";
+  "مدونتي — منصة المحتوى العربي. مقالات تتصدر جوجل، صفحة شركتك في الشبكة، وقاعدة Leads مصنّفة — بدون كتابة حرف واحد.";
 
 function trimStr(value: string | undefined | null): string {
   return typeof value === "string" ? value.trim() : "";

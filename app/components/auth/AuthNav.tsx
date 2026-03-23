@@ -12,8 +12,7 @@ type AuthNavProps = {
 export function AuthNav({ homeHref, helpHref }: AuthNavProps): ReactElement {
   return (
     <nav
-      className="flex items-center gap-4 border-b border-white/8 px-6 py-4 text-white/90"
-      style={{ background: "oklch(0.09 0.11 275)" }}
+      className="flex items-center gap-4 border-b border-border bg-background/95 px-6 py-4 text-foreground backdrop-blur-sm"
       aria-label="التسجيل"
     >
       <div className="flex shrink-0 items-center gap-2">
@@ -37,7 +36,7 @@ export function AuthNav({ homeHref, helpHref }: AuthNavProps): ReactElement {
       <Link
         href={helpHref}
         target="_blank"
-        className="shrink-0 text-xs text-white/70 transition-colors hover:text-white"
+        className="shrink-0 text-xs text-muted-foreground transition-colors hover:text-foreground"
       >
         تحتاج مساعدة؟
       </Link>

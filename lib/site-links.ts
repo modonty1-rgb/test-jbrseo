@@ -31,6 +31,8 @@ export function getNavLinks(country: SupportedCountry, basePath?: string): NavLi
 
 const FOOTER_LINKS: FooterLinkItem[] = [
   { label: "من نحن", href: "/about" },
+  { label: "الفريق", href: "/team" },
+  { label: "المميزات", href: "/features" },
   { label: "كيف نعمل", href: "/#how-it-works" },
   { label: "النتائج", href: "/#outcomes" },
   { label: "الأسعار", href: "/#pricing" },

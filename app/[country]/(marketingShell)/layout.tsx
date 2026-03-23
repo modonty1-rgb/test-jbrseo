@@ -31,7 +31,8 @@ export default async function MarketingShellLayout({
         staticLanding={staticLanding}
         country={countryCode}
         basePath={basePath}
-        pricingHref={`${basePath}#pricing`}
+        pricingHref={`${basePath}/signup`}
+        navPrimaryCtaLabel="ابدأ مجاناً"
       />
       <main id="main-content">{children}</main>
     </>

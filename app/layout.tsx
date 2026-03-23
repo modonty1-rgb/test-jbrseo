@@ -12,7 +12,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jbrseo.com";
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#0E065A" },
-    { media: "(prefers-color-scheme: dark)", color: "#0E065A" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c0c12" },
   ],
 };
 
@@ -77,7 +77,7 @@ export default function RootLayout({
       <body className={`${tajawal.className} bg-background text-foreground`}>
         <Link
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-9999 focus:bg-accent focus:text-white focus:px-4 focus:py-2 focus:rounded focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-9999 focus:bg-accent focus:text-accent-foreground focus:px-4 focus:py-2 focus:rounded focus:shadow-lg"
         >
           انتقل للمحتوى الرئيسي
         </Link>

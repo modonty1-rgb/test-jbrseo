@@ -5,7 +5,7 @@ import { DEFAULT_OG_IMAGE_URL } from "./constants";
 
 const DEFAULT_TITLE = "JBRSEO | خبراء السيو لنمو أعمالك";
 const DEFAULT_DESCRIPTION =
-  "JBRSEO – وكالة سيو متخصصة تساعدك على الظهور الأول في نتائج البحث وتنمية أعمالك في السعودية ومصر.";
+  "مدونتي — منصة المحتوى العربي. مقالات تتصدر جوجل، صفحة شركتك في الشبكة، وقاعدة Leads مصنّفة — بدون كتابة حرف واحد.";
 
 export const getGlobalSeo = unstable_cache(
   async () => {

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import type { ReactNode } from "react";
+import { Suspense, type ReactElement, type ReactNode } from "react";
 import Script from "next/script";
 import { FooterRouteGate } from "@/app/components/layout/footer/FooterRouteGate";
 import { ChatWidgetLazy } from "@/app/components/layout/ChatWidget/ChatWidgetLazy";
@@ -93,7 +93,11 @@ async function CountryLayoutContent({
   );
 }
 
-export default async function CountryLayout({
+function CountryLayoutSuspenseFallback(): ReactElement {
+  return <div className="min-h-screen bg-background" aria-hidden />;
+}
+
+export default function CountryLayout({
   children,
   params,
 }: {
@@ -102,7 +106,9 @@ export default async function CountryLayout({
 }) {
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground" lang="ar">
-      <CountryLayoutContent params={params}>{children}</CountryLayoutContent>
+      <Suspense fallback={<CountryLayoutSuspenseFallback />}>
+        <CountryLayoutContent params={params}>{children}</CountryLayoutContent>
+      </Suspense>
     </div>
   );
 }

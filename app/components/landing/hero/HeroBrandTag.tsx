@@ -1,6 +1,7 @@
 import type { ReactElement, CSSProperties } from "react";
 import Image from "next/image";
 import { heroOrbLogo } from "@/app/content/landing-images";
+import { MODONTY_LOGO_URL } from "@/lib/constants";
 
 type BarProps = {
   height: number;
@@ -29,8 +30,14 @@ export function HeroBrandTag(): ReactElement {
       <div className="hv-btag">
         <div className="hv-btag-top">
           <span className="hv-btag-dot" />
+          <Image
+            src={MODONTY_LOGO_URL}
+            alt="modonty"
+            width={72}
+            height={20}
+            className="h-4 w-auto shrink-0 opacity-80"
+          />
           <span className="hv-btag-prefix">مدونتي — أقوى موظف مبيعات عندك</span>
-          
         </div>
         <p className="hv-btag-title">منصة سعودية تصنع الفرق</p>
       </div>

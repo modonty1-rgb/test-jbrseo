@@ -17,6 +17,7 @@ import {
   formatPlanTotalDisplay,
 } from "@/lib/pricing-plan-amounts";
 import { ShieldCheck } from "lucide-react";
+import Link from "@/app/components/link";
 
 function planIndexFromParam(
   param: string | null,
@@ -106,6 +107,23 @@ export function SignupForm({
   );
 
   const detailsToShow = useMemo(() => serverPlan?.features ?? [], [serverPlan?.features]);
+
+  const submitButtonLabel = useMemo((): string => {
+    if (pending) return "جاري الإرسال...";
+    const id = planIds[Math.min(planIndex, planIds.length - 1)] ?? "";
+    switch (id) {
+      case "free":
+        return "ابدأ التجربة المجانية — التالي";
+      case "starter":
+        return "ابدأ مع الانطلاقة — التالي";
+      case "growth":
+        return "ابدأ مع الزخم — التالي";
+      case "scale":
+        return "ابدأ مع الريادة — التالي";
+      default:
+        return "التالي ←";
+    }
+  }, [pending, planIds, planIndex]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
@@ -326,9 +344,7 @@ export function SignupForm({
               disabled={pending}
               className="w-full mt-1 rounded-lg transition-all duration-200 hover:scale-[1.02] shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 font-semibold"
             >
-              {pending
-                ? "جاري الإرسال..."
-                : `ابدأ مع ${serverPlan?.name?.trim() ? serverPlan.name : "خطتك"} — التالي`}
+              {submitButtonLabel}
             </Button>
             <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs text-muted-foreground w-full">
               <span>بدون عقد</span>
@@ -337,6 +353,12 @@ export function SignupForm({
               <span aria-hidden>·</span>
               <span>إلغاء وقت ما تبي</span>
             </div>
+            <p className="mt-2 text-center text-xs text-muted-foreground">
+              بالتسجيل أنت توافق على{" "}
+              <Link href="/privacy" className="underline transition-colors hover:text-foreground">
+                سياسة الخصوصية
+              </Link>
+            </p>
           </form>
         </div>
 
@@ -353,7 +375,7 @@ export function SignupForm({
               {isAnnual ? "فوترة سنوية — إجمالي سنوي" : "فوترة شهرية"}
             </p>
             <p className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl tabular-nums">
-              <CurrencyIcon country={country} />
+              {priceRow.mo > 0 ? <CurrencyIcon country={country} /> : null}
               {formattedTotal}
             </p>
           </div>

@@ -16,10 +16,10 @@ export async function generateMetadata({
   const { country: raw } = await params;
   const slug = raw?.toLowerCase();
   if (!isSupportedCountrySlug(slug)) {
-    return { title: "التسجيل — JBRSEO" };
+    return { title: { absolute: "التسجيل — مدونتي | JBRSEO" } };
   }
   return {
-    title: "التسجيل — JBRSEO",
+    title: { absolute: "التسجيل — مدونتي | JBRSEO" },
     description: "أكمل بياناتك واختر خطتك للبدء مع JBRSEO.",
     robots: { index: false, follow: false },
   };

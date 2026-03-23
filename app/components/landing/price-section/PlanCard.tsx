@@ -292,6 +292,12 @@ export function PlanCard({
             )}
           </Button>
         )}
+        <Link
+          href="/features"
+          className="block text-center text-xs text-muted-foreground hover:text-foreground transition-colors underline mb-3"
+        >
+          شوف كل ما تشمله الخطة ←
+        </Link>
       </Card>
     </div>
   );
